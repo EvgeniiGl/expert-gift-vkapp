@@ -1,16 +1,31 @@
 import * as React from 'react';
-import { hot } from 'react-hot-loader/root';
-import { Router, Route, Switch } from 'react-router';
-import { Root } from 'app/containers/Root';
-import { TodoApp } from 'app/containers/TodoApp';
+// import {hot} from 'react-hot-loader/root';
+// import {Root} from 'app/containers/Root';
+import {MainPage} from "app/containers/MainPage";
+// import {Profile} from "app/containers/Profile";
+// import {Score} from "app/containers/Score";
+// import {Status} from "app/containers/Status";
+// import {ListGift} from "app/containers/ListGift";
+import {hot} from "react-hot-loader/root";
+// import {Root} from "app/containers/Root";
 
-// render react DOM
-export const App = hot(({ history }) => (
-  <Root>
-    <Router history={history}>
-      <Switch>
-        <Route path="/" component={TodoApp} />
-      </Switch>
-    </Router>
-  </Root>
+
+export const App = hot(() => (
+    <React.Fragment>
+        {/*
+            //@ts-ignore*/}
+        <MainPage/>
+        {/*/!**/}
+        {/*    //@ts-ignore*!/*/}
+        {/*<Profile/>*/}
+        {/*/!**/}
+        {/*    //@ts-ignore*!/*/}
+        {/*<Score/>*/}
+        {/*/!**/}
+        {/*    //@ts-ignore*!/*/}
+        {/*<Status/>*/}
+        {/*/!**/}
+        {/*    //@ts-ignore*!/*/}
+        {/*<ListGift/>*/}
+    </React.Fragment>
 ));
