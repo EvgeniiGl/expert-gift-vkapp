@@ -1,17 +1,18 @@
-
 import * as React from "react";
-import {Screen, ScreenStore} from '../../stores/ScreenStore';
-
-export interface Props {
-    ScreenStore: ScreenStore;
-}
-
-export class Score extends React.Component<Props> {
+import {ScreenEnum} from "app/stores/ScreenStore";
+import {useStore} from "app/context/store";
+import {observer} from "mobx-react-lite";
 
 
-    render() {
-        const ScreenStore = this.props.ScreenStore;
-        if (ScreenStore.screen != Screen.Score) return null;
-        return <div>Score</div>;
-    }
-}
+const Score = observer(function () {
+
+    const store = useStore();
+    if (store.screenStore.currentScreen !== ScreenEnum.Score) return null;
+    return <React.Fragment>
+        <div className="example">
+            Score
+        </div>
+    </React.Fragment>;
+});
+
+export default Score;

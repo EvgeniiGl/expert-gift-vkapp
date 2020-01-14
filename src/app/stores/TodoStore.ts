@@ -6,11 +6,16 @@ const Todo = types.model({
 
 const TodoStore = types
     .model('TodoStore', {
-        todos: types.array(Todo)
+        todos: types.array(Todo),
+        test: types.number,
     })
     .actions(self => ({
         addTodo(title) {
             self.todos.push({title});
+            self.test += 1;
+        },
+        setTest() {
+            self.test += 1;
         }
     }));
 
