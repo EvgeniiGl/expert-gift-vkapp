@@ -2,11 +2,15 @@ import React, {useEffect} from 'react';
 import MainPage from "app/containers/MainPage";
 import Score from "app/containers/Score";
 import {hot} from "react-hot-loader/root";
-import TodoExample from "app/components/TodoExample";
 import connect from '@vkontakte/vk-connect';
+import {useStore} from "app/context/store";
+import {GlobalStyle} from "./global_styles";
+import ListGift from "app/containers/ListGift";
+import Profile from "app/containers/Profile";
+import Status from "app/containers/Status";
 
 export const App = hot(() => {
-
+    const store = useStore();
     //get user info
     useEffect(() => {
         // dispatch({
@@ -28,6 +32,23 @@ export const App = hot(() => {
             console.log('fetchUser-- ',);
             const user = await connect.sendPromise('VKWebAppGetUserInfo');
             console.log('user-- ', user);
+            // const user = {
+            //     id: 151079225,
+            //     first_name: "Евгений",
+            //     last_name: "Глечиков",
+            //     sex: 2,
+            //     city: {id: 97, title: "Новокузнецк"},
+            //     country: {id: 1, title: "Россия"},
+            //     photo_100: "https://sun9-46.userapi.com/c639127/v639127225/8ed0/IWvzk8fFTBI.jpg?ava=1",
+            //     photo_max_orig: "https://sun9-24.userapi.com/c639127/v639127225/8ecc/dFKoQdeRsWU.jpg?ava=1",
+            //     bdate: "17.12.1983",
+            //     photo_200: "https://sun9-70.userapi.com/c639127/v639127225/8ecf/ecFoax3YGYk.jpg?ava=1",
+            //     timezone: 7
+            // };
+
+
+            store.userStore.setUser(user);
+
             // dispatch({
             //     type: 'setUser',
             //     payload: {
@@ -43,18 +64,13 @@ export const App = hot(() => {
 
     return (
         <React.Fragment>
+            <GlobalStyle/>
             <MainPage/>
-            {/*/!**/}
-            {/*    //@ts-ignore*!/*/}
-            {/*<Profile/>*/}
+            <Profile/>
             <Score/>
-            {/*/!**/}
-            {/*    //@ts-ignore*!/*/}
-            {/*<Status/>*/}
-            {/*/!**/}
-            {/*    //@ts-ignore*!/*/}
-            {/*<ListGift/>*/}
-            <TodoExample/>
+            <Status/>
+            <ListGift/>
+            {/*<TodoExample/>*/}
         </React.Fragment>
     );
 });

@@ -1,6 +1,6 @@
-import {types} from 'mobx-state-tree';
+import {Instance, types} from "mobx-state-tree";
 
-export enum ScreenEnum {
+export enum UserEnum {
     'MainPage',
     'Profile',
     'Score',
@@ -8,18 +8,36 @@ export enum ScreenEnum {
     'ListGift',
 }
 
-const ScreenStore = types
+export const CityModel = types
+    .model('CityModel', {
+        id: 0,
+        title: '',
+    });
+
+export const UserModel = types
+    .model('UserModel', {
+        id: 0,
+        first_name: '',
+        last_name: '',
+        sex: 0,
+        city: types.optional(CityModel, {}),
+        photo_100: '',
+        photo_max_orig: '',
+        bdate: '',
+        photo_200: '',
+        timezone: 0,
+    });
+
+export interface IUserModel extends Instance<typeof UserModel> { };
+
+const UserStore = types
     .model('TodoStore', {
-        currentScreen: types.number,
-        test:types.number,
+        user: types.optional(UserModel, {}),
     })
     .actions(self => ({
-        setScreen(screen: ScreenEnum) {
-            self.currentScreen = screen;
+        setUser(user: Instance<typeof UserModel>) {
+            self.user = user;
         },
-        setTest() {
-            self.test += 1;
-        }
     }));
 
-export default ScreenStore;
+export default UserStore;

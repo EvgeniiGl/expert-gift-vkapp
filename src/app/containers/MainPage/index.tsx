@@ -2,28 +2,29 @@ import React from 'react';
 import {useStore} from '../../context/store';
 import {observer} from 'mobx-react-lite';
 import {ScreenEnum} from "app/stores/ScreenStore";
+import * as S from './style';
+import avatar from '@img/avatar.svg';
 
 const MainPage = observer(function (props) {
-    const store = useStore();
+    const {screenStore, userStore} = useStore();
 
-    function handleSubmit() {
-        store.screenStore.setScreen(ScreenEnum.Score);
+    function watchGifts() {
+        screenStore.setScreen(ScreenEnum.ListGift);
     }
 
-    if (store.screenStore.currentScreen !== ScreenEnum.MainPage) return null;
+    if (screenStore.currentScreen !== ScreenEnum.MainPage) return null;
     return (
-        <div className="example">
-            <h1>MainPage</h1>
-            <div>
-                <button type="submit" onClick={handleSubmit}>
-                    add
-                </button>
-            </div>
-            <div>
-                {store.screenStore.test}
-            </div>
-            <h1>---------</h1>
-        </div>
+        <S.Container>
+            <S.Title>Оцени идеи для подарка,<br/>стань экспертом!</S.Title>
+            <S.WrapperUser>
+                <S.Avatar src={userStore.user.photo_200 || avatar}/>
+                <S.UserInfo>
+                    <div>Рейтинг: 1356 баллов</div>
+                    <div>Ваш статус: Новичок</div>
+                </S.UserInfo>
+            </S.WrapperUser>
+            <S.Button onClick={watchGifts}>Поехали</S.Button>
+        </S.Container>
     );
 });
 

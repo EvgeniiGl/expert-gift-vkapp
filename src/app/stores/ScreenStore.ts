@@ -9,17 +9,13 @@ export enum ScreenEnum {
 }
 
 const ScreenStore = types
-    .model('TodoStore', {
-        currentScreen: types.number,
-        test:types.number,
+    .model('ScreenStore', {
+        currentScreen: ScreenEnum.Score,
     })
     .actions(self => ({
         setScreen(screen: ScreenEnum) {
             self.currentScreen = screen;
         },
-        setTest() {
-            self.test += 1;
-        }
     }));
 
 export default ScreenStore;

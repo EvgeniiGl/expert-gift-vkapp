@@ -1,18 +1,12 @@
 import {onPatch, types} from 'mobx-state-tree';
-import TodoStore from './TodoStore';
-import ScreenStore, {ScreenEnum} from './ScreenStore';
+import ScreenStore from './ScreenStore';
 import makeInspectable from "mobx-devtools-mst";
+import UserStore from "app/stores/UserStore";
 
 const RootStore = types
     .model('RootStore', {
-        todoStore: types.optional(TodoStore, {
-            todos: [],
-            test: 0,
-        }),
-        screenStore: types.optional(ScreenStore, {
-            currentScreen: ScreenEnum.MainPage,
-            test: 0,
-        }),
+        screenStore: types.optional(ScreenStore, {}),
+        userStore: types.optional(UserStore, {}),
     });
 const rootStore = RootStore.create();
 
