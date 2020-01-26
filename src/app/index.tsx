@@ -70,7 +70,6 @@ export const App = hot(() => {
             <Score/>
             <Status/>
             <ListGift/>
-            {/*<TodoExample/>*/}
         </React.Fragment>
     );
 });

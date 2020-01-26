@@ -1,18 +1,23 @@
-import * as React from "react";
+import React from 'react';
+import {useStore} from '../../context/store';
+import {observer} from 'mobx-react-lite';
 import {ScreenEnum} from "app/stores/ScreenStore";
-import {useStore} from "app/context/store";
-import {observer} from "mobx-react-lite";
+import * as S from './style';
+import Header from "app/components/Header";
 
+const ListGift = observer(function (props) {
+    const {screenStore: {setScreen, currentScreen}} = useStore();
+    if (currentScreen !== ScreenEnum.ListGift) return null;
 
-const ListGift = observer(function () {
+    console.log('ListGift-- ',);
+    return (
+        <S.Container>
+            <Header screen={ScreenEnum.ListGift} setScreen={setScreen}/>
+<div>
 
-    const store = useStore();
-    if (store.screenStore.currentScreen !== ScreenEnum.ListGift) return null;
-    return <React.Fragment>
-        <div className="example">
-            ListGift
-        </div>
-    </React.Fragment>;
+</div>
+        </S.Container>
+    );
 });
 
 export default ListGift;
