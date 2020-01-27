@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as S from './style';
 import {Subject, Subscription} from 'rxjs';
-import {IAlert} from "@core/services/alert";
+import {IAlert} from "app/services/alert";
 
 
 interface IState {
@@ -36,6 +36,10 @@ export default class Alert extends React.Component<{}, IState> {
 
     public componentDidMount(): void {
         this.alertsStream = alerts$.subscribe(this.showAlert);
+    }
+
+    public componentWillUnmount(): void {
+        this.alertsStream.unsubscribe();
     }
 
     private hideAlert = () => {

@@ -10,7 +10,7 @@ export enum ScreenEnum {
 
 const ScreenStore = types
     .model('ScreenStore', {
-        currentScreen: ScreenEnum.ListGift,
+        currentScreen: ScreenEnum.MainPage,
     })
     .actions(self => ({
         setScreen(screen: ScreenEnum) {

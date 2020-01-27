@@ -26,9 +26,12 @@ export const UserModel = types
         bdate: '',
         photo_200: '',
         timezone: 0,
+        score: 0,
+        stage: 'Новичок'
     });
 
-export interface IUserModel extends Instance<typeof UserModel> { };
+export interface IUserModel extends Instance<typeof UserModel> {
+};
 
 const UserStore = types
     .model('TodoStore', {
@@ -37,6 +40,12 @@ const UserStore = types
     .actions(self => ({
         setUser(user: Instance<typeof UserModel>) {
             self.user = user;
+        },
+        setScoreUser(score: number) {
+            self.user.score = score;
+        },
+        setStageUser(stage: string) {
+            self.user.stage = stage;
         },
     }));
 

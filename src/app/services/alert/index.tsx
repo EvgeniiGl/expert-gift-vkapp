@@ -1,5 +1,4 @@
-import {Subject} from 'rxjs';
-import {alerts$} from "@core/services/alert/components";
+import {alerts$} from "app/services/alert/components";
 
 export enum AlertType {
     'info' = 'blue',
@@ -14,11 +13,10 @@ export interface IAlert {
     timeout?: number;
 }
 
-const alert = {
+export const customAlert = {
     info: (message: string, timeout?: number) => alerts$.next({type: AlertType.info, message, timeout}),
     success: (message: string, timeout?: number) => alerts$.next({type: AlertType.success, message, timeout}),
     warning: (message: string, timeout?: number) => alerts$.next({type: AlertType.warning, message, timeout}),
     danger: (message: string, timeout?: number) => alerts$.next({type: AlertType.danger, message, timeout}),
 };
 
-export default alert;

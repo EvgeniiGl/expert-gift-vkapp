@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 export const Container = styled.div`
     display: flex;
     align-items: center;
@@ -9,55 +8,55 @@ export const Container = styled.div`
     height: 100vh;
 `;
 
-export const Title = styled.h1`
-    font-family: Roboto Condensed,sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 23px;
-    text-align: center;
-    color: rgba(51, 51, 51, 0.5);
-`;
-
-export const Row = styled.div`
-    display:flex;
-`;
-
-export const WrapperUser = styled.div`
-    display:flex;
+export const SliderContainer = styled.div`
+    min-width: 360px;
     width: 100%;
+    cursor:pointer;
+    height: 100%;
+    & .slick-next {
+        right: 0;
+    }
 `;
 
-export const Avatar = styled.img`
+export const Wrapper = styled.div`
+    width: 100%;    
+    text-align: center;
+`;
+
+export const ImgGift = styled.img`
+   height: 250px;
+    border-radius: 10px;
+    margin: 0 auto;
+`;
+
+const Circle = styled.div`
     border-radius: 50%;
-    max-width: 156px;
-    margin: 30px;
+    position: absolute;
+    border: 2px solid #BAB5B5;
 `;
 
-export const UserInfo = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    &>:first-child{
-        font-family: Roboto Condensed,sans-serif;
-        font-style: normal;
-        font-weight: 600;
-        font-size: 18px;
-        line-height: 21px;
-        margin-bottom: 10px;
-    }
-    &>:nth-child(2){
-        font-family: Roboto Condensed,sans-serif;
-        font-style: normal;
-        font-weight: 600;
-        font-size: 14px;
-        line-height: 16px;
-    }
-    &>:last-child{
-        font-family: Roboto Condensed,sans-serif;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 16px;
-    }
+export const CircleLike = styled(Circle)<{ active?: boolean }>`
+    left: 54%;
+    transform: translate(-50%, -50%);
+    background: ${({active}) => active ? "#00D27A" : "#fff"};
+    padding: 10px 10px 10px 12px;
+    ${({active}) => active && 'border: 2px solid #00D27A;'} 
 `;
+
+export const CircleDislike = styled(Circle)<{ active?: boolean }>`
+    left: 61%;
+    transform: translate(-50%, -50%);
+    background: ${({active}) => active ? "#FF3D00" : "#fff"};
+    padding: 15px 12px 7px 10px;
+    ${({active}) => active && 'border: 2px solid #FF3D00;'} 
+`;
+
+export const Like = styled.img`
+    width: 34px;
+`;
+
+export const WrapperScore = styled.div`
+    position:relative;
+    height: 30px;
+`;
+

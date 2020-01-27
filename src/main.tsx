@@ -7,7 +7,7 @@ import store from 'app/stores/index';
 
 ReactDOM.render(
     <StoreContext.Provider value={store}>
-            <App/>
+                <App/>
     </StoreContext.Provider>,
     document.getElementById('root')
 );

@@ -85,11 +85,12 @@ module.exports = {
             // static assets
             {test: /\.html$/, use: 'html-loader'},
             {
-                test: /\.(a?svg)$/,
+                test: /\.(a?svg|woff|woff2)$/,
                 use: [
                     {
                         loader: 'url-loader',
                         options: {
+                            limit: 100000,
                             name: '[name].[ext]',
                         },
                     },

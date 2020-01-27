@@ -39,7 +39,7 @@
     "postcss-reporter": "^6.0.1",
     "postcss-url": "^8.0.0",
     "prettier": "^1.16.0",
-    "react-hot-loader": "^4.6.3",
+    "react-hot-loader": "^4.12.19",
     "style-loader": "^0.23.1",
     "ts-loader": "^5.3.3",
     "typescript": "^3.5.2",
@@ -55,6 +55,7 @@
     "@vkontakte/icons": "^1.10.0",
     "@vkontakte/vk-connect": "^1.6.5",
     "@vkontakte/vkui": "^2.30.7",
+    "axios": "^0.19.2",
     "cross-env": "^6.0.3",
     "mobx": "^5.10.1",
     "mobx-react-lite": "^1.5.2",
@@ -62,6 +63,9 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
+    "react-slick": "^0.25.2",
+    "rxjs": "^6.5.4",
+    "slick-carousel": "^1.8.1",
     "styled-components": "^4.4.1"
   }
 }

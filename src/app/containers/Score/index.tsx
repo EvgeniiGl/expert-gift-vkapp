@@ -5,14 +5,12 @@ import {observer} from "mobx-react-lite";
 import * as S from "./style";
 import Header from "app/components/Header";
 import star from "@img/star.svg";
-import {ButtonStart} from "app/core/button_start";
+import {ButtonStart} from "app/core/components/button_start";
 
 
 const Score = observer(function () {
 
-    const {screenStore: {setScreen, currentScreen}} = useStore();
-    if (currentScreen !== ScreenEnum.Score) return null;
-
+    const {screenStore: {setScreen}} = useStore();
 
     console.log('Score-- ',);
     return <S.Container>

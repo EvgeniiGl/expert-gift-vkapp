@@ -1,5 +1,5 @@
 import axios, {AxiosInstance, AxiosResponse} from 'axios';
-import {isProduction} from "../../../config";
+import {isProduction} from "../../config";
 
 const baseURL = isProduction ? 'http://localhost:8000/' : 'http://localhost:8000/';
 
@@ -26,7 +26,8 @@ class http {
         }
     };
 
-    public post = async <T>(uri: string = '', data:{}): Promise<AxiosResponse<T>> => {
+    public post = async <T>(uri: string = '', data: {}): Promise<AxiosResponse<T>> => {
+        console.log('log-- ',);
         const instance = this.fetchClient();
         try {
             return await instance.post<T>(uri, data);
