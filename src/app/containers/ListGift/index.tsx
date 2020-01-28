@@ -3,21 +3,19 @@ import {useStore} from '../../context/store';
 import {observer} from 'mobx-react-lite';
 import {ScreenEnum} from "app/stores/ScreenStore";
 import * as S from './style';
-import Header from "app/components/Header";
+import Header from "app/core/components/Header";
 import Slider from "react-slick";
-import like from '@img/like.svg';
-import like_white from '@img/like_white.svg';
-import dislike from '@img/dislike.svg';
-import dislike_white from '@img/dislike_white.svg';
 import {IGift} from "app/stores/GiftStore";
-import {ModalStage, StageEnum} from "app/components/ModalStage";
+import {ModalStage, StageEnum} from "app/core/components/ModalStage";
+import {GiftItem} from "app/containers/ListGift/components/gift_item";
 
 const settings = {
     dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
-    slidesToScroll: 1
+    slidesToScroll: 1,
+    lazyLoad: true,
 };
 
 const ListGift = observer(function (props) {
@@ -46,23 +44,15 @@ const ListGift = observer(function (props) {
             console.log('useEffect unmount-- ',);
         };
     }, []);
+
+    const list_gift = gifts.map((gift) => <GiftItem key={gift.id} gift={gift} up={up} down={down}/>);
+
     return (
         <S.Container>
             <Header screen={ScreenEnum.ListGift} setScreen={setScreen}/>
             <S.SliderContainer>
                 <Slider ref={c => (slider = c)} {...settings}>
-                    {gifts.map((gift) => <S.Wrapper key={gift.id}>
-                        <h2>{gift.title}</h2>
-                        <S.ImgGift src={gift.img_url}/>
-                        <S.WrapperScore>
-                            <S.CircleLike onClick={() => up(gift)} active={!!gift.rate}>
-                                <S.Like src={gift.rate ? like_white : like}/>
-                            </S.CircleLike>
-                            <S.CircleDislike onClick={() => down(gift)} active={gift.rate === false}>
-                                <S.Like src={gift.rate === false ? dislike_white : dislike}/>
-                            </S.CircleDislike>
-                        </S.WrapperScore>
-                    </S.Wrapper>)}
+                    {list_gift}
                 </Slider>
             </S.SliderContainer>
             {giftStore.showModalStage &&

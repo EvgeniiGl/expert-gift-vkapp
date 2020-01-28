@@ -3,7 +3,7 @@ import {ScreenEnum} from "app/stores/ScreenStore";
 import {useStore} from "app/context/store";
 import {observer} from "mobx-react-lite";
 import * as S from "./style";
-import Header from "app/components/Header";
+import Header from "app/core/components/Header";
 import star from "@img/star.svg";
 import {ButtonStart} from "app/core/components/button_start";
 

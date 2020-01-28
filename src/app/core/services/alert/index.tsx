@@ -1,4 +1,4 @@
-import {alerts$} from "app/services/alert/components";
+import {alerts$} from "app/core/services/alert/components";
 
 export enum AlertType {
     'info' = 'blue',

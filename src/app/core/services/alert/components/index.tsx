@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as S from './style';
 import {Subject, Subscription} from 'rxjs';
-import {IAlert} from "app/services/alert";
+import {IAlert} from "app/core/services/alert";
 
 
 interface IState {

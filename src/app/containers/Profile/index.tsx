@@ -4,7 +4,7 @@ import {observer} from 'mobx-react-lite';
 import {ScreenEnum} from "app/stores/ScreenStore";
 import * as S from './style';
 import avatar from '@img/avatar.svg';
-import Header from "app/components/Header";
+import Header from "app/core/components/Header";
 import {ButtonStart} from "app/core/components/button_start";
 import {IUserModel} from "app/stores/UserStore";
 

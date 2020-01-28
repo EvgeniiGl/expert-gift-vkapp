@@ -1,5 +1,5 @@
 import axios, {AxiosInstance, AxiosResponse} from 'axios';
-import {isProduction} from "../../config";
+import {isProduction} from "../../../config";
 
 const baseURL = isProduction ? 'http://localhost:8000/' : 'http://localhost:8000/';
 
