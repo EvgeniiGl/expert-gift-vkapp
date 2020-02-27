@@ -16,7 +16,7 @@ const Score = observer(function () {
     return <S.Container>
         <Header screen={ScreenEnum.Score} setScreen={setScreen}/>
         <S.WrapperUser>
-            <S.Img src={star}></S.Img>
+            <S.Img src={star}/>
             <S.UserInfo>
                 <div>Баллы</div>
                 <div>У вас 1356 баллов</div>

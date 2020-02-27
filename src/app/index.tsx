@@ -12,10 +12,12 @@ import {observer} from "mobx-react-lite";
 import {HTTP} from "app/core/services/http";
 import {customAlert} from "app/core/services/alert";
 import {IGift} from "app/stores/GiftStore";
+import Alert from "app/core/services/alert/components";
 
 export const App =
     observer(() => {
-        const {screenStore, userStore, giftStore} = useStore();
+        const store = useStore();
+        const {screenStore, userStore, giftStore} = store;
         //get user info
         useEffect(() => {
 
@@ -32,26 +34,30 @@ export const App =
         }, []);
 
         const fetchDataUser = async () => {
-            console.log('fetchUser-- ',);
             let user;
             try {
-                user = {id: 151079225};
+                user =
+                    {id: 151079225};
                 // await connect.sendPromise('VKWebAppGetUserInfo');
+                localStorage.setItem('user_id', user.id);
             } catch (e) {
                 console.log('err-- ', e);
             }
-            if (!user.id) {
+            if (user.id) {
+                store.setUser(user);
+            } else {
                 customAlert.danger('Не удалось получить пользователя!');
             }
-            console.log('user-- ', user);
-            const response = await HTTP.post<{ id: number, score: number, stage: string }>('user', {id: user.id});
-            console.log('response-- ', response.data);
+            console.log('user vk-- ', user);
+            const response = await HTTP.get<{ id: number, score: number, stage: string }>('user');
+            console.log('user -- ', response.data);
             if (response.data && response.data.id) {
-                user = {...user, ...response.data};
+                userStore.setStage(response.data);
+                userStore.setStage(response.data.stage);
+                userStore.setScore(response.data.score);
             } else {
                 customAlert.danger('Не удалось получить счет!');
             }
-            userStore.setUser(user);
         };
 
         const fetchGifts = async () => {
@@ -73,6 +79,7 @@ export const App =
                 {screenStore.currentScreen === ScreenEnum.Score && <Score/>}
                 {screenStore.currentScreen === ScreenEnum.Status && <Status/>}
                 {screenStore.currentScreen === ScreenEnum.ListGift && <ListGift/>}
+                <Alert/>
             </React.Fragment>
         );
     });

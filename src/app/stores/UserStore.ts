@@ -1,12 +1,13 @@
 import {Instance, types} from "mobx-state-tree";
 
-export enum UserEnum {
-    'MainPage',
-    'Profile',
-    'Score',
-    'Status',
-    'ListGift',
-}
+export const Stage = types
+    .model('StageModel', {
+        id: 0,
+        name: '',
+    });
+
+export interface StageModel extends Instance<typeof Stage> {
+};
 
 export const CityModel = types
     .model('CityModel', {
@@ -14,8 +15,8 @@ export const CityModel = types
         title: '',
     });
 
-export const UserModel = types
-    .model('UserModel', {
+export const UserStore = types
+    .model('UserStore', {
         id: 0,
         first_name: '',
         last_name: '',
@@ -27,26 +28,18 @@ export const UserModel = types
         photo_200: '',
         timezone: 0,
         score: 0,
-        stage: 'Новичок'
-    });
-
-export interface IUserModel extends Instance<typeof UserModel> {
-};
-
-const UserStore = types
-    .model('TodoStore', {
-        user: types.optional(UserModel, {}),
+        stage: types.optional(Stage, {id:0,name:"Новичек"})
     })
     .actions(self => ({
-        setUser(user: Instance<typeof UserModel>) {
-            self.user = user;
+        setScore(score: number) {
+            self.score = score;
         },
-        setScoreUser(score: number) {
-            self.user.score = score;
-        },
-        setStageUser(stage: string) {
-            self.user.stage = stage;
+        setStage(stage:  StageModel ) {
+            self.stage = stage;
         },
     }));
+
+export interface UserModel extends Instance<typeof UserStore> {
+};
 
 export default UserStore;

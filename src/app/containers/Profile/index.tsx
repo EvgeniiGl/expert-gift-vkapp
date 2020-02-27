@@ -6,11 +6,11 @@ import * as S from './style';
 import avatar from '@img/avatar.svg';
 import Header from "app/core/components/Header";
 import {ButtonStart} from "app/core/components/button_start";
-import {IUserModel} from "app/stores/UserStore";
+import {UserModel} from "app/stores/UserStore";
 
 const Profile = observer(function (props) {
     const {screenStore: {setScreen}, userStore} = useStore();
-    const user: IUserModel = userStore.user;
+    const user: UserModel = userStore;
     console.log('Profile-- ',);
     return (
         <S.Container>

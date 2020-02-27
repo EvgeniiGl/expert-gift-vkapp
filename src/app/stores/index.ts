@@ -1,4 +1,4 @@
-import {onPatch, types} from 'mobx-state-tree';
+import {Instance, onPatch, types} from 'mobx-state-tree';
 import ScreenStore from './ScreenStore';
 import makeInspectable from "mobx-devtools-mst";
 import UserStore from "app/stores/UserStore";
@@ -9,7 +9,12 @@ const RootStore = types
         screenStore: types.optional(ScreenStore, {}),
         userStore: types.optional(UserStore, {}),
         giftStore: types.optional(GiftStore, {}),
-    });
+    }).actions(self => ({
+        setUser(user: Instance<typeof UserStore>) {
+            self.userStore = user;
+        }
+        })
+    );
 const rootStore = RootStore.create();
 
 onPatch(rootStore, patch => {

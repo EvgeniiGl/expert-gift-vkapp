@@ -50,6 +50,7 @@ export const CircleDislike = styled(Circle)<{ active?: boolean }>`
     padding: 15px 12px 7px 10px;
     ${({active}) => active && 'border: 2px solid #FF3D00;'};
     margin: 0 20px;
+    
 `;
 
 export const Like = styled.img`
