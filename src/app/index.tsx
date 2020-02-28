@@ -20,17 +20,14 @@ export const App =
         const {screenStore, userStore, giftStore} = store;
         //get user info
         useEffect(() => {
-
-            console.log('useEffect App',);
             connect.subscribe(({detail: {type, data}}) => {
                     if (type === 'VKWebAppUpdateConfig') {
-                        const schemeAttribute = document.createAttribute('scheme');
-                        console.log('schemeAttribute-- ', schemeAttribute);
+                        // const schemeAttribute = document.createAttribute('scheme');
                     }
                 }
             );
             fetchDataUser();
-            fetchGifts();
+            fetchNewGifts();
         }, []);
 
         const fetchDataUser = async () => {
@@ -41,18 +38,17 @@ export const App =
                 // await connect.sendPromise('VKWebAppGetUserInfo');
                 localStorage.setItem('user_id', user.id);
             } catch (e) {
-                console.log('err-- ', e);
+
             }
             if (user.id) {
                 store.setUser(user);
             } else {
                 customAlert.danger('Не удалось получить пользователя!');
             }
-            console.log('user vk-- ', user);
+
             const response = await HTTP.get<{ id: number, score: number, stage: string }>('user');
-            console.log('user -- ', response.data);
+
             if (response.data && response.data.id) {
-                userStore.setStage(response.data);
                 userStore.setStage(response.data.stage);
                 userStore.setScore(response.data.score);
             } else {
@@ -60,9 +56,8 @@ export const App =
             }
         };
 
-        const fetchGifts = async () => {
-            const response = await HTTP.get<IGift[]>('gifts');
-            console.log('log-- ', response.data);
+        const fetchNewGifts = async () => {
+            const response = await HTTP.get<IGift[]>('gifts_new');
             if (response.data && response.data.length > 0) {
                 giftStore.getGifts(response.data);
             } else {
@@ -70,7 +65,7 @@ export const App =
             }
         };
 
-        console.log('store.screenStore.currentScreen-- ', screenStore.currentScreen);
+
         return (
             <React.Fragment>
                 <GlobalStyle/>

@@ -12,7 +12,7 @@ const Score = observer(function () {
 
     const {screenStore: {setScreen}} = useStore();
 
-    console.log('Score-- ',);
+
     return <S.Container>
         <Header screen={ScreenEnum.Score} setScreen={setScreen}/>
         <S.WrapperUser>

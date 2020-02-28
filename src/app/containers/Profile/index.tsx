@@ -11,7 +11,7 @@ import {UserModel} from "app/stores/UserStore";
 const Profile = observer(function (props) {
     const {screenStore: {setScreen}, userStore} = useStore();
     const user: UserModel = userStore;
-    console.log('Profile-- ',);
+
     return (
         <S.Container>
             <Header screen={ScreenEnum.Profile} setScreen={setScreen}/>

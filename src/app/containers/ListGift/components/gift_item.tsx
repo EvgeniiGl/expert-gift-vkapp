@@ -15,16 +15,16 @@ interface Props {
 }
 
 export const GiftItem: React.FC<Props> = observer(({gift, up, down}) => {
-    console.log('log--  gift-item',);
+
     return <S.Wrapper key={gift.id}>
         <h2>{gift.title}</h2>
         <S.ImgGift src={gift.img}/>
         <S.WrapperScore>
-            <S.CircleLike onClick={() => up(gift)} active={!!gift.rate}>
-                <S.Like src={gift.rate ? like_white : like}/>
+            <S.CircleLike onClick={() => up(gift)} active={!!gift.mark}>
+                <S.Like src={gift.mark ? like_white : like}/>
             </S.CircleLike>
-            <S.CircleDislike onClick={() => down(gift)} active={gift.rate === false}>
-                <S.Like src={gift.rate === false ? dislike_white : dislike}/>
+            <S.CircleDislike onClick={() => down(gift)} active={gift.mark === 0}>
+                <S.Like src={gift.mark === 0 ? dislike_white : dislike}/>
             </S.CircleDislike>
         </S.WrapperScore>
     </S.Wrapper>;

@@ -12,7 +12,7 @@ const Status = observer(function () {
 
     const {screenStore: {setScreen}} = useStore();
 
-    console.log('Status-- ',);
+
     return <S.Container>
         <Header screen={ScreenEnum.Status} setScreen={setScreen}/>
         <S.WrapperUser>

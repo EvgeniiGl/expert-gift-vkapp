@@ -1,10 +1,10 @@
-import {cast, types} from 'mobx-state-tree';
+import {cast, Instance, types} from 'mobx-state-tree';
 
 export interface IGift {
     id: number,
     title: string,
     img: string,
-    rate?: boolean,
+    mark?: number,
 }
 
 // const mocks: IGift[] = [
@@ -30,13 +30,18 @@ const Gift = types
         id: types.identifierNumber,
         title: '',
         img: '',
-        rate: types.maybe(types.boolean),
+        mark: types.maybeNull(types.number),
+        saved: types.maybe(types.boolean),
     })
     .actions(self => ({
-        assess(value: boolean) {
-            console.log('log-- ',);
-            self.rate = value;
-        }
+        assess(value: number) {
+
+            self.mark = value;
+            self.saved = false;
+        },
+        setSave() {
+            self.saved = true;
+        },
     }));
 
 const GiftsArray = types.array(Gift);
@@ -46,14 +51,36 @@ const GiftStore = types
         gifts: GiftsArray,
         showModalStage: false
     })
+    .views(self => {
+        return {
+            get needSave() {
+                return self.gifts.filter(gift => !!gift.saved).length + 5 <
+                    self.gifts.filter(gift => gift.mark !== null).length;
+            },
+            get giftsForSave() {
+                return self.gifts.reduce(function (giftsForSave, gift) {
+                    if (gift.mark !== null && !gift.saved) {
+                        giftsForSave.push(gift);
+                    }
+                    return giftsForSave;
+                }, []);
+
+            }
+        };
+    })
     .actions(self => ({
         getGifts(gifts: IGift[]) {
             self.gifts = cast(gifts);
             // self.gifts.replace(mocks)
         },
+        attachGifts(gifts: IGift[]) {
+            self.gifts.replace(self.gifts.concat(gifts));
+        },
         toggleModalStage(show: false) {
             self.showModalStage = show;
-        }
+        },
     }));
+
+export type GiftStoreType = Instance<typeof GiftStore>
 
 export default GiftStore;
