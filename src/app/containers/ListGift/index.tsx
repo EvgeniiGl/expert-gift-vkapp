@@ -10,13 +10,15 @@ import {ModalStage, StageEnum} from "app/core/components/ModalStage";
 import {GiftItem} from "app/containers/ListGift/components/gift_item";
 import {HTTP} from "app/core/services/http";
 import {customAlert} from "app/core/services/alert";
+import {UserModel} from "app/stores/UserStore";
 
 const ListGift = observer(function (props) {
 
     const store = useStore();
-    const {screenStore: {setScreen}} = useStore();
+    const {screenStore: {setScreen}, userStore} = useStore();
     const giftStore: GiftStoreType = store.giftStore;
     const gifts: IGift[] = giftStore.gifts;
+    const user: UserModel = userStore;
 
     let slider = null;
 
@@ -27,6 +29,7 @@ const ListGift = observer(function (props) {
         slidesToShow: 1,
         slidesToScroll: 1,
         lazyLoad: true,
+        swipe: false,
         beforeChange: (current) => {
             if (current > giftStore.gifts.length - 5) {
                 attachGifts();
@@ -88,7 +91,7 @@ const ListGift = observer(function (props) {
 
     return (
         <S.Container>
-            <Header screen={ScreenEnum.ListGift} setScreen={setScreen}/>
+            <Header score={user.score} screen={ScreenEnum.ListGift} setScreen={setScreen}/>
             <S.SliderContainer>
                 <Slider ref={c => (slider = c)} {...settings}>
                     {list_gift}

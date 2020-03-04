@@ -6,15 +6,17 @@ import * as S from "./style";
 import Header from "app/core/components/Header";
 import star from "@img/star.svg";
 import {ButtonStart} from "app/core/components/button_start";
+import {UserModel} from "app/stores/UserStore";
 
 
 const Score = observer(function () {
 
-    const {screenStore: {setScreen}} = useStore();
+    const {screenStore: {setScreen}, userStore} = useStore();
+    const user: UserModel = userStore;
 
 
     return <S.Container>
-        <Header screen={ScreenEnum.Score} setScreen={setScreen}/>
+        <Header score={user.score} screen={ScreenEnum.Score} setScreen={setScreen}/>
         <S.WrapperUser>
             <S.Img src={star}/>
             <S.UserInfo>

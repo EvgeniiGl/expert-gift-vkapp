@@ -8,6 +8,7 @@ import {ScreenEnum} from "app/stores/ScreenStore";
 interface Props {
     screen: ScreenEnum
     setScreen: (ScreenEnum) => void
+    score: number
 }
 
 const Header: React.FC<Props> = (props) => {
@@ -19,7 +20,7 @@ const Header: React.FC<Props> = (props) => {
         </S.Tab>
         <S.Tab active={props.screen === ScreenEnum.Score} onClick={() => props.setScreen(ScreenEnum.Score)}>
             <S.Img src={star}/>
-            <S.Score>1345</S.Score>
+            <S.Score>{props.score}</S.Score>
         </S.Tab>
         <S.Tab active={props.screen === ScreenEnum.Status} onClick={() => props.setScreen(ScreenEnum.Status)}>
             <S.Img src={crown}/>

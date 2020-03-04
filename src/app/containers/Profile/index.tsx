@@ -14,7 +14,7 @@ const Profile = observer(function (props) {
 
     return (
         <S.Container>
-            <Header screen={ScreenEnum.Profile} setScreen={setScreen}/>
+            <Header score={user.score} screen={ScreenEnum.Profile} setScreen={setScreen}/>
             <S.WrapperUser>
                 <S.Avatar src={user.photo_200 || avatar}></S.Avatar>
                 <S.UserInfo>
