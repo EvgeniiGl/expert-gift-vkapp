@@ -1,13 +1,6 @@
 import {cast, Instance, types} from 'mobx-state-tree';
 
-export interface IGift {
-    id: number,
-    title: string,
-    img: string,
-    mark?: number,
-}
-
-// const mocks: IGift[] = [
+// const mocks: GiftType[] = [
 //     {
 //         id: 1,
 //         title: 'Обладатель паспорта. Паспортный кошелекПодарки к юбилеюКожа',
@@ -34,15 +27,20 @@ const Gift = types
         saved: types.maybe(types.boolean),
     })
     .actions(self => ({
-        assess(value: number) {
-
-            self.mark = value;
+        up() {
+            self.mark = 1;
+            self.saved = false;
+        },
+        down() {
+            self.mark = 0;
             self.saved = false;
         },
         setSave() {
             self.saved = true;
-        },
+        }
     }));
+
+export type GiftType= Instance<typeof Gift>
 
 const GiftsArray = types.array(Gift);
 
@@ -69,11 +67,11 @@ const GiftStore = types
         };
     })
     .actions(self => ({
-        getGifts(gifts: IGift[]) {
+        getGifts(gifts: GiftType[]) {
             self.gifts = cast(gifts);
             // self.gifts.replace(mocks)
         },
-        attachGifts(gifts: IGift[]) {
+        attachGifts(gifts: GiftType[]) {
             self.gifts.replace(self.gifts.concat(gifts));
         },
         toggleModalStage(show: false) {

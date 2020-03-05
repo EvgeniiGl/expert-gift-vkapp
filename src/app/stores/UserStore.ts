@@ -37,6 +37,9 @@ export const UserStore = types
         setStage(stage:  StageModel ) {
             self.stage = stage;
         },
+        addScore(score:number) {
+            self.score += score;
+        },
     }));
 
 export interface UserModel extends Instance<typeof UserStore> {

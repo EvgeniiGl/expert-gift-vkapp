@@ -21,7 +21,7 @@ const Score = observer(function () {
             <S.Img src={star}/>
             <S.UserInfo>
                 <div>Баллы</div>
-                <div>У вас 1356 баллов</div>
+                <div>{`У вас ${user.score} баллов`}</div>
                 <div>До следующего уровня 2000 баллов<br/>Описание как заработать баллы</div>
             </S.UserInfo>
         </S.WrapperUser>

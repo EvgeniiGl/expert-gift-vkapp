@@ -3,17 +3,16 @@ import {isProduction} from "../../../config";
 
 const baseURL = isProduction ? 'http://localhost:8000/' : 'http://localhost:8000/';
 
-export type SuccessResponse = {
-    "status": boolean,
-    "code": number,
-    "message": string,
-    "data": any | null
+export type ResponseType = {
+    status: boolean,
+    code: number,
+    message: string,
+    data?: any
 }
 
-//TODO depricated remove this class, use API
-class http {
+//TODO add error handling
+class api {
     private fetchClient = (): AxiosInstance => {
-        console.warn("Service HTTP depricated instead use API (core/services/api.ts)");
         const id = localStorage.getItem('user_id');
         const defaultOptions = {
             baseURL: baseURL,
@@ -27,25 +26,25 @@ class http {
     };
 
 
-    public get = async <T>(uri: string = ''): Promise<AxiosResponse<T>> => {
+    public get = async <T>(uri: string = ''): Promise<ResponseType> => {
         const instance = this.fetchClient();
         try {
-            return await instance.get<T>(uri);
+            const response: AxiosResponse = await instance.get<T>(uri);
+            return response.data;
         } catch (e) {
             return e;
         }
     };
 
-    public post = async <T>(uri: string = '', data: {}): Promise<AxiosResponse<T>> => {
+    public post = async <T>(uri: string = '', data: {}): Promise<ResponseType> => {
         const instance = this.fetchClient();
         try {
-            return await instance.post<T>(uri, data);
+            const response: AxiosResponse = await instance.post<T>(uri, data);
+            return response.data;
         } catch (e) {
             return e;
         }
     };
-
-
 };
 
-export const HTTP = new http();
+export const API = new api();

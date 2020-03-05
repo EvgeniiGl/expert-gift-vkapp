@@ -5,19 +5,21 @@ import {ScreenEnum} from "app/stores/ScreenStore";
 import * as S from './style';
 import Header from "app/core/components/Header";
 import Slider from "react-slick";
-import {GiftStoreType, IGift} from "app/stores/GiftStore";
+import {GiftStoreType, GiftType} from "app/stores/GiftStore";
 import {ModalStage, StageEnum} from "app/core/components/ModalStage";
 import {GiftItem} from "app/containers/ListGift/components/gift_item";
 import {HTTP} from "app/core/services/http";
+import {API, ResponseType} from "app/core/services/api";
 import {customAlert} from "app/core/services/alert";
 import {UserModel} from "app/stores/UserStore";
+import {vk_bridge} from "app/core/services/vk_bridge";
 
 const ListGift = observer(function (props) {
 
     const store = useStore();
     const {screenStore: {setScreen}, userStore} = useStore();
     const giftStore: GiftStoreType = store.giftStore;
-    const gifts: IGift[] = giftStore.gifts;
+    const gifts: GiftType[] = giftStore.gifts;
     const user: UserModel = userStore;
 
     let slider = null;
@@ -38,18 +40,41 @@ const ListGift = observer(function (props) {
 
     };
 
-    const up = (gift) => {
+    const up = (gift: GiftType) => {
         slider.slickNext();
         setTimeout(() => {
-            gift.assess(1);
+            gift.up();
         }, settings.speed);
     };
 
-    const down = (gift) => {
+    const down = (gift: GiftType) => {
         slider.slickNext();
         setTimeout(() => {
-            gift.assess(0);
+            gift.down();
         }, settings.speed);
+    };
+
+    const addScoreRepost = async (gift: GiftType) => {
+        const response = await API.post<ResponseType>("repost", gift);
+        if (response.status) {
+            user.addScore(response.data);
+        } else {
+            customAlert.danger('Не удалось добавить очки за репост!');
+        }
+    };
+
+    const repost = async (gift: GiftType) => {
+        // if (connect.supports("VKWebAppShowWallPostBox")) {
+        //     connect.send("VKWebAppShowWallPostBox", {
+        //         "message": `Эксперт подарков: Идея ${gift.title}! https://vk.com/siberia_handmade`,
+        //         "attachments": `photo${gift.img}, https://vk.com/siberia_handmade`
+        //     });
+        // }
+
+        const response = await vk_bridge.send("VKWebAppShowWallPostBox", {"message": "Hello!"});
+        if (response.status) {
+            addScoreRepost(gift);
+        }
     };
 
     useEffect(() => {
@@ -78,7 +103,7 @@ const ListGift = observer(function (props) {
 
     const attachGifts = async () => {
         await saveMarks();
-        const response = await HTTP.get<IGift[]>('/gifts_new');
+        const response = await HTTP.get<GiftType[]>('/gifts_new');
         if (response.data && response.data.length > 0) {
             giftStore.attachGifts(response.data);
         } else {
@@ -87,7 +112,7 @@ const ListGift = observer(function (props) {
     };
 
 
-    const list_gift = gifts.map((gift) => <GiftItem key={gift.id} gift={gift} up={up} down={down}/>);
+    const list_gift = gifts.map((gift) => <GiftItem key={gift.id} gift={gift} up={up} down={down} repost={repost}/>);
 
     return (
         <S.Container>
