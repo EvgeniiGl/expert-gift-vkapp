@@ -1,7 +1,7 @@
 import axios, {AxiosInstance, AxiosResponse} from 'axios';
 import {isProduction} from "../../../config";
 
-const baseURL = isProduction ? 'http://localhost:8000/' : 'http://localhost:8000/';
+const baseURL = isProduction ? 'http://212.75.210.71/' : 'http://localhost:8000/';
 
 export type ResponseType = {
     status: boolean,
