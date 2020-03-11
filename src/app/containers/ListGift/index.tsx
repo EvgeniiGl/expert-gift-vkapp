@@ -13,7 +13,6 @@ import {customAlert} from "app/core/services/alert";
 import {UserModel} from "app/stores/UserStore";
 import {GiftMenu} from "app/containers/ListGift/components/gift_menu";
 import {vk_bridge} from "app/core/services/vk_bridge";
-import {HTTP} from "app/core/services/http";
 
 const ListGift = observer(function (props) {
 
@@ -112,8 +111,8 @@ const ListGift = observer(function (props) {
 
     const attachGifts = async () => {
         setLoadAttachGifts(true);
-        const response = await HTTP.get<GiftType[]>('/gifts_new');
-        if (response.data && response.data.length > 0) {
+        const response = await API.get<GiftType[]>('/gifts_new');
+        if (response.status) {
             giftStore.attachGifts(response.data);
         } else {
             customAlert.danger('Не удалось загрузить список подарков!');

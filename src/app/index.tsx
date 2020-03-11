@@ -9,12 +9,12 @@ import Status from "app/containers/Status";
 import Profile from "app/containers/Profile";
 import {ScreenEnum} from "app/stores/ScreenStore";
 import {observer} from "mobx-react-lite";
-import {HTTP} from "app/core/services/http";
 import {customAlert} from "app/core/services/alert";
 import {GiftType} from "app/stores/GiftStore";
 import Alert from "app/core/services/alert/components";
 import {vk_bridge} from "app/core/services/vk_bridge";
 import {isProduction, vk_developer_id} from "../config";
+import {API} from "app/core/services/api";
 
 export const App =
     observer(() => {
@@ -52,9 +52,9 @@ export const App =
                 customAlert.danger('Не удалось получить пользователя!');
             }
 
-            const response = await HTTP.get<{ id: number, score: number, stage: string }>('user');
+            const response = await API.get('user');
 
-            if (response.data && response.data.id) {
+            if (response.status) {
                 userStore.setStage(response.data.stage);
                 userStore.setScore(response.data.score);
             } else {
@@ -63,14 +63,13 @@ export const App =
         };
 
         const fetchNewGifts = async () => {
-            const response = await HTTP.get<GiftType[]>('gifts_new');
-            if (response.data && response.data.length > 0) {
+            const response = await API.get<{data:GiftType[]}>('gifts_new');
+            if (response.status && response.data.length > 0) {
                 giftStore.setGifts(response.data);
             } else {
                 customAlert.danger('Не удалось получить список подарков!');
             }
         };
-
 
         return (
             <React.Fragment>

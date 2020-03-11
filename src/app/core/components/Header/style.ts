@@ -19,7 +19,7 @@ export const Tab = styled.div<{ active?: boolean }>`
     justify-content: center;
     width: 100%;
     ${({active}) => active && 'border-bottom:#ED8A19 3px solid;'};
-    height: 89px;
+    height: 98px;
     ${({active}) => active && 'background: #ECE6F5;'};
     text-align: center;
 `;
@@ -28,16 +28,33 @@ export const Img = styled.img`
     width: 76px;
 `;
 
+export const ImgGiftsList = styled.img`
+    width: 60px;
+`;
+
 export const Avatar = styled.img`
     width: 86px;
 `;
 
-export const Score = styled.div`
-    position: absolute;
-font-style: normal;
-font-weight: 900;
-font-size: 16px;
-line-height: 14px;
+export const Info = styled.div`
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    border-right: 2px solid #D7D7D7;
+`;
 
-color: #FFFFFF;
+export const Stage = styled.div` 
+    font-weight: bold;
+    font-size: 16px;
+    color: #230741;
+    line-height: 24px;
+`;
+
+export const Score = styled.div`
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 19px;
+    color: #ED8A19;
 `;
