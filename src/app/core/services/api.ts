@@ -1,7 +1,5 @@
 import axios, {AxiosInstance, AxiosResponse} from 'axios';
-import {isProduction} from "../../../config";
-
-const baseURL = isProduction ? 'http://212.75.210.71/' : 'http://localhost:8000/';
+import {baseUrl} from "../../../config";
 
 export type ResponseType = {
     status: boolean,
@@ -15,7 +13,7 @@ class api {
     private fetchClient = (): AxiosInstance => {
         const id = localStorage.getItem('user_id');
         const defaultOptions = {
-            baseURL: baseURL,
+            baseURL: baseUrl,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `${id}`

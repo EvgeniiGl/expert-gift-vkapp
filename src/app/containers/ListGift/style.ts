@@ -8,6 +8,14 @@ export const Container = styled.div`
     height: 100vh;
 `;
 
+export const Main = styled.div`
+    display:flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+`;
+
 export const SliderContainer = styled.div`
     min-width: 360px;
     width: 100%;
@@ -26,8 +34,7 @@ export const Wrapper = styled.div`
 `;
 
 export const ImgGift = styled.img`
-    height: 250px;
-    border-radius: 10px;
+    height: 100%;
     margin: 0 auto;
 `;
 
@@ -50,24 +57,24 @@ export const CircleLike = styled(Circle)`
 
 export const CircleRepost = styled(Circle)`
     background: #0085FF;
-    padding: 14px;
+    padding: 14px 14px 12px;
 `;
 
 export const CircleDislike = styled(Circle)`
-    background: #FF3D00;
+    background: #EB2E4A;
     padding: 15px 12px 7px 10px;
 `;
 
 export const Like = styled.img`
-    width: 34px;
+    width: 30px;
 `;
 
 export const Repost = styled.img`
     width: 24px;
 `;
 
-export const WrapperScore = styled.div`    position: absolute;
-    bottom: 0;
+export const WrapperScore = styled.div`   
+    position: absolute;
     height: 60px;
     display: flex;
     justify-content: space-between;
@@ -75,11 +82,34 @@ export const WrapperScore = styled.div`    position: absolute;
     z-index: 100000;
     transform: translate(-50%, 50%);
     left: 50%;
-    min-width: 180px;
-    bottom: 30px;
+    min-width: 340px;
+    bottom: 70px;
+`;
+
+export const Score = styled.div`   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80px;
 `;
 
 export const Hidden = styled.div` 
     height: 10px;
+`;
+
+export const SliderItem = styled.div` 
+    background: #C4C4C4;
+    border-radius: 10px; 
+    height: 70vh;
+    margin: 0 13px;
+`;
+
+export const Title = styled.h2` 
+    margin: 10px;
+`;
+
+export const Label = styled.div` 
+    font-size:12px;
+    margin-top: 10px;
 `;
 

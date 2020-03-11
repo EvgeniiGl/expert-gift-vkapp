@@ -10,6 +10,7 @@ export const Container = styled.div`
     width: 100%;
     align-items: center;
     justify-content: space-around;
+    height: 15vh;
 `;
 
 export const Tab = styled.div<{ active?: boolean }>`

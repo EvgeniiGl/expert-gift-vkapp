@@ -14,12 +14,13 @@ import {customAlert} from "app/core/services/alert";
 import {GiftType} from "app/stores/GiftStore";
 import Alert from "app/core/services/alert/components";
 import {vk_bridge} from "app/core/services/vk_bridge";
+import {isProduction, vk_developer_id} from "../config";
 
 export const App =
     observer(() => {
         const store = useStore();
         const {screenStore, userStore, giftStore} = store;
-        //get user info
+
         useEffect(() => {
             connect.subscribe(({detail: {type, data}}) => {
                     if (type === 'VKWebAppUpdateConfig') {
@@ -29,18 +30,21 @@ export const App =
             );
             fetchDataUser();
             fetchNewGifts();
-            vk_bridge.send("VKWebAppInit");
+            vk_bridge.send("VKWebAppInit", {});
         }, []);
 
         const fetchDataUser = async () => {
             let user;
             try {
-                user =
-                    {id: 151079225};
-                // await connect.sendPromise('VKWebAppGetUserInfo');
+                const dataUser = await vk_bridge.send('VKWebAppGetUserInfo');
+                if (isProduction && dataUser.status) {
+                    user = dataUser.data;
+                } else {
+                    user = {id: vk_developer_id};
+                }
                 localStorage.setItem('user_id', user.id);
             } catch (e) {
-
+                customAlert.danger('Не удалось получить пользователя Вконтакте!');
             }
             if (user.id) {
                 store.setUser(user);
@@ -54,7 +58,7 @@ export const App =
                 userStore.setStage(response.data.stage);
                 userStore.setScore(response.data.score);
             } else {
-                customAlert.danger('Не удалось получить счет!');
+                customAlert.danger('Не удалось получить счет и рейтинг!');
             }
         };
 

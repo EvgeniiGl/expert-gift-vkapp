@@ -1,7 +1,6 @@
 import axios, {AxiosInstance, AxiosResponse} from 'axios';
-import {isProduction} from "../../../config";
+import {baseUrl} from "../../../config";
 
-const baseURL = isProduction ? 'http://localhost:8000/' : 'http://localhost:8000/';
 
 export type SuccessResponse = {
     "status": boolean,
@@ -16,7 +15,7 @@ class http {
         console.warn("Service HTTP depricated instead use API (core/services/api.ts)");
         const id = localStorage.getItem('user_id');
         const defaultOptions = {
-            baseURL: baseURL,
+            baseURL: baseUrl,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `${id}`

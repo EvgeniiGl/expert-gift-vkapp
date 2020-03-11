@@ -16,7 +16,6 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.h1`
-    font-family: Roboto;
     font-style: normal;
     font-weight: bold;
     font-size: 35px;
@@ -36,7 +35,6 @@ export const Avatar = styled.img`
 `;
 
 export const UserInfo = styled.div`
-    font-family: Roboto;
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
@@ -47,16 +45,18 @@ export const UserInfo = styled.div`
     justify-content: center;
 `;
 
-export const Button = styled.button`
-        background: linear-gradient(to top, #FF460B 20%,#FED281 80% );
+export const Button = styled.div`
+    display:flex;
+    justify-content: center;
+    align-items:center;
     border-radius: 15px;
     height: 50px;
     width: 180px;
-    font-family: Roboto;
     font-style: normal;
     font-weight: 500;
     font-size: 18px;
     line-height: 21px;
     text-align: center;
     color: #FFFFFF;
+    background: linear-gradient(0deg, #FF460B 0%, #FED281 100%);
 `;

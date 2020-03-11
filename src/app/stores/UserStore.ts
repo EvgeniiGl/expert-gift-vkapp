@@ -28,16 +28,16 @@ export const UserStore = types
         photo_200: '',
         timezone: 0,
         score: 0,
-        stage: types.optional(Stage, {id:0,name:"Новичек"})
+        stage: types.optional(Stage, {id: 0, name: "Новичек"})
     })
     .actions(self => ({
         setScore(score: number) {
             self.score = score;
         },
-        setStage(stage:  StageModel ) {
+        setStage(stage: StageModel) {
             self.stage = stage;
         },
-        addScore(score:number) {
+        addScore(score: number) {
             self.score += score;
         },
     }));

@@ -10,7 +10,6 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.h1`
-    font-family: Roboto Condensed,sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 20px;
@@ -38,7 +37,6 @@ export const UserInfo = styled.div`
     flex-direction: column;
     justify-content: center;
     &>:first-child{
-        font-family: Roboto Condensed,sans-serif;
         font-style: normal;
         font-weight: 600;
         font-size: 18px;
@@ -46,14 +44,12 @@ export const UserInfo = styled.div`
         margin-bottom: 10px;
     }
     &>:nth-child(2){
-        font-family: Roboto Condensed,sans-serif;
         font-style: normal;
         font-weight: 600;
         font-size: 14px;
         line-height: 16px;
     }
     &>:last-child{
-        font-family: Roboto Condensed,sans-serif;
         font-style: normal;
         font-weight: 500;
         font-size: 14px;

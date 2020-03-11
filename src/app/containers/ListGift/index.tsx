@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useStore} from '../../context/store';
 import {observer} from 'mobx-react-lite';
 import {ScreenEnum} from "app/stores/ScreenStore";
@@ -12,58 +12,54 @@ import {HTTP} from "app/core/services/http";
 import {API, ResponseType} from "app/core/services/api";
 import {customAlert} from "app/core/services/alert";
 import {UserModel} from "app/stores/UserStore";
-import {vk_bridge} from "app/core/services/vk_bridge";
+import {GiftMenu} from "app/containers/ListGift/components/gift_menu";
 
 const ListGift = observer(function (props) {
 
     const store = useStore();
-    const {screenStore: {setScreen}, userStore} = useStore();
+    const screenStore = store.screenStore;
+    const userStore: UserModel = store.userStore;
     const giftStore: GiftStoreType = store.giftStore;
-    const gifts: GiftType[] = giftStore.gifts;
-    const user: UserModel = userStore;
+
+    const [disable, setDisable] = useState(false);
 
     let slider = null;
 
     const settings = {
         dots: false,
-        infinite: true,
-        speed: 500,
+        speed: 1000,
         slidesToShow: 1,
         slidesToScroll: 1,
         lazyLoad: true,
         swipe: false,
-        beforeChange: (current) => {
-            if (current > giftStore.gifts.length - 5) {
-                attachGifts();
-            }
-        },
-
+        centerMode: true,
+        infinite: true,
+        arrows: false,
     };
 
-    const up = (gift: GiftType) => {
+
+    // const addScoreRepost = async (gift: GiftType) => {
+    //     const response = await API.post<ResponseType>("repost", gift);
+    //     if (response.status) {
+    //         userStore.addScore(response.data);
+    //     } else {
+    //         customAlert.danger('Не удалось добавить очки за репост!');
+    //     }
+    // };
+
+    const setMark = async (mark: 0 | 1) => {
         slider.slickNext();
         setTimeout(() => {
-            gift.up();
+            // gift.setMark(mark);
         }, settings.speed);
+        if (disable) return;
+        setDisable(true);
+        if (giftStore.needSave) await saveMarks();
+        if (giftStore.needAdd) await attachGifts();
+        setDisable(false);
     };
 
-    const down = (gift: GiftType) => {
-        slider.slickNext();
-        setTimeout(() => {
-            gift.down();
-        }, settings.speed);
-    };
-
-    const addScoreRepost = async (gift: GiftType) => {
-        const response = await API.post<ResponseType>("repost", gift);
-        if (response.status) {
-            user.addScore(response.data);
-        } else {
-            customAlert.danger('Не удалось добавить очки за репост!');
-        }
-    };
-
-    const repost = async (gift: GiftType) => {
+    const repost = async () => {
         // if (connect.supports("VKWebAppShowWallPostBox")) {
         //     connect.send("VKWebAppShowWallPostBox", {
         //         "message": `Эксперт подарков: Идея ${gift.title}! https://vk.com/siberia_handmade`,
@@ -71,10 +67,10 @@ const ListGift = observer(function (props) {
         //     });
         // }
 
-        const response = await vk_bridge.send("VKWebAppShowWallPostBox", {"message": "Hello!"});
-        if (response.status) {
-            addScoreRepost(gift);
-        }
+        // const response = await vk_bridge.send("VKWebAppShowWallPostBox", {"message": `Эксперт подарков! Идея: ${gift.title}! https://vk.com/siberia_handmade`});
+        // if (response.status) {
+        //     addScoreRepost(gift);
+        // }
     };
 
     useEffect(() => {
@@ -87,22 +83,18 @@ const ListGift = observer(function (props) {
 
     const saveMarks = async () => {
         const data = giftStore.giftsForSave;
-        const response = await HTTP.post<{ ok: boolean }>('/save_marks', data);
-        if (response.data && response.data.ok) {
+        const response = await API.post<ResponseType>('/save_marks', data);
+        if (response.status) {
             data.forEach((gift => {
                 gift.setSave();
             }));
+            userStore.setScore(response.data);
         } else {
             customAlert.danger('Не удалось сохранить оценки!');
         }
     };
 
-    if (giftStore.needSave) {
-        saveMarks();
-    }
-
     const attachGifts = async () => {
-        await saveMarks();
         const response = await HTTP.get<GiftType[]>('/gifts_new');
         if (response.data && response.data.length > 0) {
             giftStore.attachGifts(response.data);
@@ -111,17 +103,23 @@ const ListGift = observer(function (props) {
         }
     };
 
-
-    const list_gift = gifts.map((gift) => <GiftItem key={gift.id} gift={gift} up={up} down={down} repost={repost}/>);
+    const list_gift = giftStore.gifts.map((gift) => {
+        return <GiftItem key={gift.id}
+                         gift={gift}/>;
+    });
 
     return (
         <S.Container>
-            <Header score={user.score} screen={ScreenEnum.ListGift} setScreen={setScreen}/>
-            <S.SliderContainer>
-                <Slider ref={c => (slider = c)} {...settings}>
-                    {list_gift}
-                </Slider>
-            </S.SliderContainer>
+            <Header score={userStore.score} screen={ScreenEnum.ListGift} setScreen={screenStore.setScreen}/>
+            <S.Main>
+                <S.Title>{'props.gift.title'}</S.Title>
+                <S.SliderContainer>
+                    <Slider ref={c => (slider = c)} {...settings}>
+                        {list_gift}
+                    </Slider>
+                </S.SliderContainer>
+                <GiftMenu setMark={setMark} repost={repost}/>
+            </S.Main>
             {giftStore.showModalStage &&
             <ModalStage stage={StageEnum.one} toggleModalStage={giftStore.toggleModalStage}/>}
         </S.Container>
