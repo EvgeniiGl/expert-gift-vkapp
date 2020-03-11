@@ -14,9 +14,9 @@ const Profile = observer(function (props) {
 
     return (
         <S.Container>
-            <Header score={user.score} screen={ScreenEnum.Profile} setScreen={setScreen}/>
+            <Header screen={ScreenEnum.Profile} setScreen={setScreen}/>
             <S.WrapperUser>
-                <S.Avatar src={user.photo_200 || avatar}></S.Avatar>
+                <S.Avatar src={user.photo_200 || avatar}/>
                 <S.UserInfo>
                     <div>Профиль</div>
                     <div>{user.first_name || ''} {user.last_name || ''}</div>
@@ -24,7 +24,7 @@ const Profile = observer(function (props) {
                 </S.UserInfo>
             </S.WrapperUser>
             <S.Title>Оцени идеи для подарка, стань экспертом!</S.Title>
-            <ButtonStart setScreen={setScreen}/>
+            <ButtonStart/>
         </S.Container>
     );
 });

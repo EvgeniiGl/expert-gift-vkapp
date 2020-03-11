@@ -24,7 +24,7 @@ import {cast, Instance, types} from 'mobx-state-tree';
 //     },
 // ];
 
-const countSaveMarks = 0;
+// const countSaveMarks = 0;
 
 const Gift = types
     .model('Gift', {
@@ -53,31 +53,35 @@ const GiftStore = types
     })
     .views(self => {
         return {
-            get needSave() {
-                return self.gifts.filter(gift => !!gift.saved).length + countSaveMarks <
-                    self.gifts.filter(gift => gift.mark !== null).length;
-            },
-            get needAdd() {
-                return self.gifts.filter(gift => gift.mark === null).length < 5;
-            },
-            get giftsForSave() {
-                return self.gifts.reduce(function (giftsForSave, gift) {
-                    if (gift.mark !== null && !gift.saved) {
-                        giftsForSave.push(gift);
-                    }
-                    return giftsForSave;
-                }, []);
-
+            // get needSave() {
+            //     return self.gifts.filter(gift => !!gift.saved).length + countSaveMarks <
+            //         self.gifts.filter(gift => gift.mark !== null).length;
+            // },
+            // get needAdd() {
+            //     return self.gifts.filter(gift => gift.mark === null).length < 5;
+            // },
+            // get giftsForSave() {
+            //     return self.gifts.reduce(function (giftsForSave, gift) {
+            //         if (gift.mark !== null && !gift.saved) {
+            //             giftsForSave.push(gift);
+            //         }
+            //         return giftsForSave;
+            //     }, []);
+            //
+            // }
+            get savedGifts() {
+                return self.gifts.filter(gift => gift.saved);
             }
         };
     })
     .actions(self => ({
-        getGifts(gifts: GiftType[]) {
+        setGifts(gifts: GiftType[]) {
             self.gifts = cast(gifts);
             // self.gifts.replace(mocks)
         },
         attachGifts(gifts: GiftType[]) {
-            self.gifts.replace(gifts.concat(gifts));
+            const uniqueGifts = self.gifts.concat(gifts).reduce((acc, value) => acc.some(i => i.id === value.id) ? acc : acc.concat(value), []);
+            self.gifts.replace(uniqueGifts);
         },
         toggleModalStage(show: false) {
             self.showModalStage = show;

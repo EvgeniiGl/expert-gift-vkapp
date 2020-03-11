@@ -18,7 +18,7 @@ const RootStore = types
 const rootStore = RootStore.create();
 
 onPatch(rootStore, patch => {
-    console.log(patch); // writes in console.log every changes in the state
+    console.log(patch);
 });
 makeInspectable(rootStore); // MST dev tools
 

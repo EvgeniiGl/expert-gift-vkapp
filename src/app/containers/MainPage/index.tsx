@@ -1,18 +1,14 @@
 import React from 'react';
 import {useStore} from 'app/context/store';
 import {observer} from 'mobx-react-lite';
-import {ScreenEnum} from "app/stores/ScreenStore";
 import * as S from './style';
 import avatar from '@img/avatar.svg';
 import {UserModel} from "app/stores/UserStore";
+import {ButtonStart} from "app/core/components/button_start";
 
 const MainPage = observer(function (props) {
-    const {screenStore, userStore} = useStore();
+    const { userStore} = useStore();
     const user: UserModel = userStore;
-
-    function watchGifts() {
-        screenStore.setScreen(ScreenEnum.ListGift);
-    }
 
     return (
         <S.Container>
@@ -24,7 +20,7 @@ const MainPage = observer(function (props) {
                     <div>Ваш статус: {user.stage.name}</div>
                 </S.UserInfo>
             </S.WrapperUser>
-            <S.Button onClick={watchGifts}>Поехали</S.Button>
+           <ButtonStart />
         </S.Container>
     );
 });

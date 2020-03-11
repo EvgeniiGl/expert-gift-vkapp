@@ -9,7 +9,7 @@ interface Props {
 export const GiftItem: React.FC<Props> = (props) => {
     return <S.Wrapper key={props.gift.id}>
         <S.SliderItem>
-            <S.ImgGift src={props.gift.img}/>
+            <S.ImgGift src={props.gift.img} title={props.gift.title}/>
         </S.SliderItem>
     </S.Wrapper>;
 };

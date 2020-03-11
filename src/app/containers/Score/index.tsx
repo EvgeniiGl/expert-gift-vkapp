@@ -16,7 +16,7 @@ const Score = observer(function () {
 
 
     return <S.Container>
-        <Header score={user.score} screen={ScreenEnum.Score} setScreen={setScreen}/>
+        <Header screen={ScreenEnum.Score} setScreen={setScreen}/>
         <S.WrapperUser>
             <S.Img src={star}/>
             <S.UserInfo>
@@ -26,7 +26,7 @@ const Score = observer(function () {
             </S.UserInfo>
         </S.WrapperUser>
         <S.Title>Оцени идеи для подарка, стань экспертом!</S.Title>
-        <ButtonStart setScreen={setScreen}/>
+        <ButtonStart/>
     </S.Container>;
 });
 

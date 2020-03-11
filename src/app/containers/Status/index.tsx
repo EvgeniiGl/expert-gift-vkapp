@@ -6,18 +6,16 @@ import * as S from "./style";
 import Header from "app/core/components/Header";
 import crown from "@img/crown.svg";
 import {ButtonStart} from "app/core/components/button_start";
-import {UserModel} from "app/stores/UserStore";
 
 
 const Status = observer(function () {
 
-    const {screenStore: {setScreen}, userStore} = useStore();
-    const user: UserModel = userStore;
+    const {screenStore: {setScreen}} = useStore();
 
     return <S.Container>
-        <Header score={user.score} screen={ScreenEnum.Status} setScreen={setScreen}/>
+        <Header screen={ScreenEnum.Status} setScreen={setScreen}/>
         <S.WrapperUser>
-            <S.Img src={crown}></S.Img>
+            <S.Img src={crown}/>
             <S.UserInfo>
                 <div>Статус</div>
                 <div>Новичок</div>
@@ -26,7 +24,7 @@ const Status = observer(function () {
             </S.UserInfo>
         </S.WrapperUser>
         <S.Title>Оцени идеи для подарка, стань экспертом!</S.Title>
-        <ButtonStart setScreen={setScreen}/>
+        <ButtonStart/>
     </S.Container>;
 });
 

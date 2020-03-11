@@ -36,9 +36,9 @@ export const App =
         const fetchDataUser = async () => {
             let user;
             try {
-                const dataUser = await vk_bridge.send('VKWebAppGetUserInfo');
-                if (isProduction && dataUser.status) {
-                    user = dataUser.data;
+                if (isProduction) {
+                    const dataUser = await vk_bridge.send('VKWebAppGetUserInfo');
+                    if (dataUser.status) user = dataUser.data;
                 } else {
                     user = {id: vk_developer_id};
                 }
@@ -65,7 +65,7 @@ export const App =
         const fetchNewGifts = async () => {
             const response = await HTTP.get<GiftType[]>('gifts_new');
             if (response.data && response.data.length > 0) {
-                giftStore.getGifts(response.data);
+                giftStore.setGifts(response.data);
             } else {
                 customAlert.danger('Не удалось получить список подарков!');
             }
