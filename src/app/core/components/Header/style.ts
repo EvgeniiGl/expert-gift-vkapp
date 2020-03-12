@@ -19,7 +19,7 @@ export const Tab = styled.div<{ active?: boolean }>`
     justify-content: center;
     width: 100%;
     ${({active}) => active && 'border-bottom:#ED8A19 3px solid;'};
-    height: 98px;
+    height: 15vh;
     ${({active}) => active && 'background: #ECE6F5;'};
     text-align: center;
 `;

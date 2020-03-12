@@ -19,13 +19,13 @@ export const ModalStage: React.FC<Props> = (props) => {
 
     const outSideClick = (e) => {
         if (!wrap.contains(e.target)) {
-            props.toggleModalStage(false)
+            props.toggleModalStage(false);
         }
     };
 
     return <S.Container onClick={outSideClick}>
         <S.Wrapper ref={(ref) => wrap = ref}>
-            <S.Bg src={props.stage}/>
+            <S.Bg src={`${props.stage}`}/>
             <S.Close onClick={() => props.toggleModalStage(false)}/>
             <S.Title>Поздравляем,</S.Title>
             <S.Text>вы достигли нового ранга</S.Text>

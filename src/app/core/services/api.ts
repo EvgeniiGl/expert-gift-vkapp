@@ -1,7 +1,7 @@
 import axios, {AxiosInstance, AxiosResponse} from 'axios';
 import {baseUrl} from "../../../config";
 
-export type ResponseType = {
+export type ResponseType<T> = {
     status: boolean,
     code: number,
     message: string,
@@ -24,7 +24,7 @@ class api {
     };
 
 
-    public get = async <T>(uri: string = ''): Promise<ResponseType> => {
+    public get = async <T>(uri: string = ''): Promise<ResponseType<{ data: T }>> => {
         const instance = this.fetchClient();
         try {
             const response: AxiosResponse = await instance.get<T>(uri);
@@ -34,7 +34,7 @@ class api {
         }
     };
 
-    public post = async <T>(uri: string = '', data: {}): Promise<ResponseType> => {
+    public post = async <T>(uri: string = '', data: {}): Promise<ResponseType<{ data: T }>> => {
         const instance = this.fetchClient();
         try {
             const response: AxiosResponse = await instance.post<T>(uri, data);

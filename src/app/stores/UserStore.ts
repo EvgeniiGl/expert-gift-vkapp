@@ -4,6 +4,7 @@ export const Stage = types
     .model('StageModel', {
         id: 0,
         name: '',
+        score: 0,
     });
 
 export interface StageModel extends Instance<typeof Stage> {

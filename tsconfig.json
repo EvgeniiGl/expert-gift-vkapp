@@ -29,7 +29,12 @@
       "app/*": [
         "./app/*"
       ]
-    }
+    },
+    "plugins": [
+      {
+        "name": "typescript-styled-plugin"
+      }
+    ]
   },
   "exclude": [
     "dist",

@@ -8,7 +8,7 @@ import Slider from "react-slick";
 import {GiftStoreType, GiftType} from "app/stores/GiftStore";
 import {ModalStage, StageEnum} from "app/core/components/ModalStage";
 import {GiftItem} from "app/containers/ListGift/components/gift_item";
-import {API, ResponseType} from "app/core/services/api";
+import {API} from "app/core/services/api";
 import {customAlert} from "app/core/services/alert";
 import {UserModel} from "app/stores/UserStore";
 import {GiftMenu} from "app/containers/ListGift/components/gift_menu";
@@ -47,7 +47,7 @@ const ListGift = observer(function (props) {
     };
 
     const addScoreRepost = async (gift: GiftType) => {
-        const response = await API.post<ResponseType>("repost", gift);
+        const response = await API.post<number>("repost", gift);
         if (response.status) {
             userStore.addScore(response.data);
         } else {
@@ -101,7 +101,7 @@ const ListGift = observer(function (props) {
     // };
 
     const saveMark = async (data) => {
-        const response = await API.post<ResponseType>('/save_marks', [data]);
+        const response = await API.post<number>('/save_marks', [data]);
         if (response.status) {
             userStore.setScore(response.data);
         } else {
