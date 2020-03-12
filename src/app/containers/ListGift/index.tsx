@@ -9,7 +9,7 @@ import {GiftStoreType, GiftType} from "app/stores/GiftStore";
 import {ModalStage, StageEnum} from "app/core/components/ModalStage";
 import {GiftItem} from "app/containers/ListGift/components/gift_item";
 import {API} from "app/core/services/api";
-import {customAlert} from "app/core/services/alert";
+import {customAlert} from "app/core/components/alert";
 import {UserModel} from "app/stores/UserStore";
 import {GiftMenu} from "app/containers/ListGift/components/gift_menu";
 import {vk_bridge} from "app/core/services/vk_bridge";

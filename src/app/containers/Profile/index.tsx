@@ -8,8 +8,10 @@ import Header from "app/core/components/Header";
 import {StageModel, UserModel} from "app/stores/UserStore";
 import {ListStages} from "app/containers/Profile/components/list_stages";
 import {API} from "app/core/services/api";
-import {customAlert} from "app/core/services/alert";
+import {customAlert} from "app/core/components/alert";
 import {SliderRating} from "app/containers/Profile/components/slider_rating";
+import {LoaderSwitch} from "app/core/components/loader/loader-switch";
+
 
 const Profile = observer(function (props) {
     const {screenStore: {setScreen}, userStore} = useStore();
@@ -18,17 +20,19 @@ const Profile = observer(function (props) {
     const [listStages, setListStages] = useState([]);
 
     const getListStages = async () => {
+        LoaderSwitch.start();
         const response = await API.get<StageModel[]>('/list_stages');
         if (response.status) {
             setListStages(response.data);
         } else {
             customAlert.danger('Не удалось получить список рейтинга!');
         }
+        LoaderSwitch.stop();
     };
 
     useEffect(() => {
         getListStages();
-    });
+    }, []);
 
     return (
         <S.Container>

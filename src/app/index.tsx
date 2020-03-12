@@ -9,12 +9,13 @@ import Status from "app/containers/Status";
 import Profile from "app/containers/Profile";
 import {ScreenEnum} from "app/stores/ScreenStore";
 import {observer} from "mobx-react-lite";
-import {customAlert} from "app/core/services/alert";
+import {customAlert} from "app/core/components/alert";
 import {GiftType} from "app/stores/GiftStore";
-import Alert from "app/core/services/alert/components";
+import Alert from "app/core/components/alert/components";
 import {vk_bridge} from "app/core/services/vk_bridge";
 import {isProduction, vk_developer_id} from "../config";
 import {API} from "app/core/services/api";
+import {Loader} from "app/core/components/loader/loader";
 
 export const App =
     observer(() => {
@@ -63,7 +64,7 @@ export const App =
         };
 
         const fetchNewGifts = async () => {
-            const response = await API.get<{data:GiftType[]}>('gifts_new');
+            const response = await API.get<{ data: GiftType[] }>('gifts_new');
             if (response.status && response.data.length > 0) {
                 giftStore.setGifts(response.data);
             } else {
@@ -80,6 +81,7 @@ export const App =
                 {screenStore.currentScreen === ScreenEnum.Status && <Status/>}
                 {screenStore.currentScreen === ScreenEnum.ListGift && <ListGift/>}
                 <Alert/>
+                <Loader/>
             </React.Fragment>
         );
     });
