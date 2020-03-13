@@ -1,6 +1,6 @@
 import React from 'react';
 import * as S from '../style';
-import {StageModel} from "app/stores/UserStore";
+import {StageModel} from "app/stores/StageStore";
 
 type Props = {
     list_stages: StageModel[]
@@ -9,7 +9,8 @@ type Props = {
 
 export const SliderRating: React.FC<Props> = (props) => {
 
-    let start, end;
+    let start = 0 ;
+    let end = 100;
     for (let i = 0; props.list_stages.length > i; i++) {
         if (props.score <= props.list_stages[i].score) {
             end = props.list_stages[i].score;
@@ -19,7 +20,6 @@ export const SliderRating: React.FC<Props> = (props) => {
     }
 
     const width = (props.score) / (end - start) || 1;
-
 
     return <S.WrapSlider>
         <S.SliderText>У вас {props.score} баллов</S.SliderText>

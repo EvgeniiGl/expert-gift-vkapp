@@ -6,13 +6,13 @@ import * as S from './style';
 import Header from "app/core/components/Header";
 import Slider from "react-slick";
 import {GiftStoreType, GiftType} from "app/stores/GiftStore";
-import {ModalStage, StageEnum} from "app/core/components/ModalStage";
 import {GiftItem} from "app/containers/ListGift/components/gift_item";
 import {API} from "app/core/services/api";
 import {customAlert} from "app/core/components/alert";
 import {UserModel} from "app/stores/UserStore";
 import {GiftMenu} from "app/containers/ListGift/components/gift_menu";
 import {vk_bridge} from "app/core/services/vk_bridge";
+import {StageStoreType} from "app/stores/StageStore";
 
 const ListGift = observer(function (props) {
 
@@ -20,28 +20,31 @@ const ListGift = observer(function (props) {
     const screenStore = store.screenStore;
     const userStore: UserModel = store.userStore;
     const giftStore: GiftStoreType = store.giftStore;
+    const stageStore: StageStoreType = store.stageStore;
 
-    const [mark, toggleMark] = useState(null);
+    const [mark, toggleMark] = useState<0 | 1>();
     const [currentGift, toggleGift] = useState(giftStore.gifts[0]);
     const [loadAttachGifts, setLoadAttachGifts] = useState(false);
 
-    let slider = null;
+    let slider: any = null;
 
     const settings = {
         dots: false,
         speed: 800,
         slidesToShow: 1,
         slidesToScroll: 1,
-        lazyLoad: true,
+        lazyLoad: "ondemand",
         swipe: false,
         centerMode: true,
         infinite: false,
         arrows: false,
-        beforeChange: (current, next) => {
-            saveMark({id: giftStore.gifts[current].id, mark: mark});
-            toggleGift(giftStore.gifts[next]);
-            if (giftStore.gifts.length < current + 5 && !loadAttachGifts) {
-                attachGifts();
+        beforeChange: (current: number, next: number) => {
+            if (!!mark) {
+                saveMark({id: giftStore.gifts[current].id, mark: mark});
+                toggleGift(giftStore.gifts[next]);
+                if (giftStore.gifts.length < current + 5 && !loadAttachGifts) {
+                    attachGifts();
+                }
             }
         },
     };
@@ -55,14 +58,10 @@ const ListGift = observer(function (props) {
         }
     };
 
+
     const setMark = async (mark: 0 | 1) => {
         toggleMark(mark);
         slider.slickNext();
-        setTimeout(() => {
-            // gift.setMark(mark);
-        }, settings.speed);
-        // if (giftStore.needSave) await saveMarks();
-        // if (giftStore.needAdd) await attachGifts();
     };
 
     const repost = async () => {
@@ -100,7 +99,7 @@ const ListGift = observer(function (props) {
     //     }
     // };
 
-    const saveMark = async (data) => {
+    const saveMark = async (data: { id: number, mark: 0 | 1 }) => {
         const response = await API.post<number>('/save_marks', [data]);
         if (response.status) {
             userStore.setScore(response.data);
@@ -131,14 +130,14 @@ const ListGift = observer(function (props) {
             <S.Main>
                 <S.Title>{currentGift.title}</S.Title>
                 <S.SliderContainer>
+                    {/*
+                    // @ts-ignore */}
                     <Slider ref={c => (slider = c)} {...settings}>
                         {list_gift}
                     </Slider>
                 </S.SliderContainer>
                 <GiftMenu setMark={setMark} repost={repost}/>
             </S.Main>
-            {giftStore.showModalStage &&
-            <ModalStage stage={StageEnum.one} toggleModalStage={giftStore.toggleModalStage}/>}
         </S.Container>
     );
 });

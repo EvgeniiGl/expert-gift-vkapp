@@ -49,10 +49,8 @@ export type GiftType = Instance<typeof Gift>
 const GiftStore = types
     .model('GiftStore', {
         gifts: types.array(Gift),
-        showModalStage: false
     })
-    .views(self => {
-        return {
+    .views(self => ({
             // get needSave() {
             //     return self.gifts.filter(gift => !!gift.saved).length + countSaveMarks <
             //         self.gifts.filter(gift => gift.mark !== null).length;
@@ -71,20 +69,17 @@ const GiftStore = types
             // }
             get savedGifts() {
                 return self.gifts.filter(gift => gift.saved);
-            }
-        };
-    })
+
+        }
+    }))
     .actions(self => ({
         setGifts(gifts: GiftType[]) {
             self.gifts = cast(gifts);
             // self.gifts.replace(mocks)
         },
         attachGifts(gifts: GiftType[]) {
-            const uniqueGifts = self.gifts.concat(gifts).reduce((acc, value) => acc.some(i => i.id === value.id) ? acc : acc.concat(value), []);
+            const uniqueGifts:GiftType[] = self.gifts.concat(gifts).reduce((acc, value:any) => acc.some((i:GiftType) => i.id === value.id) ? acc : acc.concat(value), []);
             self.gifts.replace(uniqueGifts);
-        },
-        toggleModalStage(show: false) {
-            self.showModalStage = show;
         },
     }));
 

@@ -1,14 +1,16 @@
 import React from 'react';
 import * as S from './../style';
-import {StageModel} from 'app/stores/UserStore';
+import {StageModel} from "app/stores/StageStore";
 
 interface Props {
     list_stages: StageModel[]
 }
 
+type IColumnElem  = JSX.Element[]
+
 export const ListStages: React.FC<Props> = (props) => {
 
-    const list = props.list_stages.reduce((acc, currentStage) => {
+    const list = props.list_stages.reduce((acc:{col1:IColumnElem,col2:IColumnElem, score:number}, currentStage) => {
         acc.col1.push(<S.Text bold key={currentStage.id}>{currentStage.name}</S.Text>);
         acc.col2.push(<S.Text bold
                               key={currentStage.id}>

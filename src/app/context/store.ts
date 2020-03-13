@@ -1,8 +1,11 @@
 import React, { useContext } from 'react'
+import {RootStoreType} from "app/stores";
 
 export const StoreContext = React.createContext(null)
 
-export function useStore() {
+export type StoreContextType = typeof StoreContext
+
+export function useStore():RootStoreType {
 
     const _store = useContext(StoreContext);
 

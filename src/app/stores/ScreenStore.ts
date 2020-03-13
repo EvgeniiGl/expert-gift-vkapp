@@ -3,7 +3,7 @@ import {types} from 'mobx-state-tree';
 export enum ScreenEnum {
     'MainPage',
     'Profile',
-    'Score',
+    'Stage',
     'Status',
     'ListGift',
 }

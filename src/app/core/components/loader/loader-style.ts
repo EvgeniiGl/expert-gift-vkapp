@@ -12,16 +12,12 @@ const baseContainerStyles = css`
     opacity: 0.1;
 `;
 
-const styleInside = css`
-  position: relative;
-`;
-
 const styleAbsolute = css`
   position: absolute;
 `;
 
 export const Container = styled.div<{ show: boolean, inside?: boolean }>`
     ${baseContainerStyles}
-    ${({inside}) => inside ? styleInside : styleAbsolute}
+    ${styleAbsolute}
     ${({show}) => !show && "display: none;"}
 `;

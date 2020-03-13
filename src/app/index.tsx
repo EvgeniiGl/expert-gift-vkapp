@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import MainPage from "app/containers/MainPage";
-import Score from "app/containers/Score";
+import Stage from "app/containers/Stage";
 import connect from '@vkontakte/vk-connect';
 import {useStore} from "app/context/store";
 import {GlobalStyle} from "./global_styles";
@@ -16,11 +16,13 @@ import {vk_bridge} from "app/core/services/vk_bridge";
 import {isProduction, vk_developer_id} from "../config";
 import {API} from "app/core/services/api";
 import {Loader} from "app/core/components/loader/loader";
+import {ModalStage} from "app/core/components/ModalStage";
+import {StageModel} from "app/stores/StageStore";
 
 export const App =
     observer(() => {
         const store = useStore();
-        const {screenStore, userStore, giftStore} = store;
+        const {screenStore, userStore, giftStore, stageStore} = store;
 
         useEffect(() => {
             connect.subscribe(({detail: {type, data}}) => {
@@ -29,8 +31,10 @@ export const App =
                     }
                 }
             );
+            //TODO rewrite to async Promises
             fetchDataUser();
             fetchNewGifts();
+            getListStages()
             vk_bridge.send("VKWebAppInit", {});
         }, []);
 
@@ -72,16 +76,28 @@ export const App =
             }
         };
 
+        const getListStages = async () => {
+            const response = await API.get<StageModel[]>('/list_stages');
+            if (response.status) {
+                stageStore.setListStages(response.data);
+                stageStore.setNextStage(response.data);
+
+            } else {
+                customAlert.danger('Не удалось получить список рейтинга!');
+            }
+        };
+
         return (
             <React.Fragment>
                 <GlobalStyle/>
                 {screenStore.currentScreen === ScreenEnum.MainPage && <MainPage/>}
                 {screenStore.currentScreen === ScreenEnum.Profile && <Profile/>}
-                {screenStore.currentScreen === ScreenEnum.Score && <Score/>}
+                {screenStore.currentScreen === ScreenEnum.Stage && <Stage/>}
                 {screenStore.currentScreen === ScreenEnum.Status && <Status/>}
                 {screenStore.currentScreen === ScreenEnum.ListGift && <ListGift/>}
                 <Alert/>
-                <Loader/>
+                <Loader control />
+                <ModalStage />
             </React.Fragment>
         );
     });

@@ -10,7 +10,7 @@ import {UserModel} from "app/stores/UserStore";
 
 interface Props {
     screen: ScreenEnum
-    setScreen: (ScreenEnum) => void
+    setScreen: (screen:ScreenEnum) => void
 }
 
 const Header: React.FC<Props> = observer((props) => {

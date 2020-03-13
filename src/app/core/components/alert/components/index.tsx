@@ -13,7 +13,7 @@ interface IState {
 
 export const alerts$ = new Subject<IAlert>();
 
-const root = document.getElementById("root");
+const root:any  = document.getElementById("root");
 //todo rewrite with react-spring or other libraries ?
 export default class Alert extends React.Component<{}, IState> {
 

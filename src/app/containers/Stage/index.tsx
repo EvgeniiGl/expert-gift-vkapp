@@ -9,14 +9,13 @@ import {ButtonStart} from "app/core/components/button_start";
 import {UserModel} from "app/stores/UserStore";
 
 
-const Score = observer(function () {
+const Stage = observer(function () {
 
     const {screenStore: {setScreen}, userStore} = useStore();
     const user: UserModel = userStore;
 
-
     return <S.Container>
-        <Header screen={ScreenEnum.Score} setScreen={setScreen}/>
+        <Header screen={ScreenEnum.Stage} setScreen={setScreen}/>
         <S.WrapperUser>
             <S.Img src={star}/>
             <S.UserInfo>
@@ -30,4 +29,4 @@ const Score = observer(function () {
     </S.Container>;
 });
 
-export default Score;
+export default Stage;

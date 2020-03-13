@@ -1,19 +1,10 @@
 import {Instance, types} from "mobx-state-tree";
-
-export const Stage = types
-    .model('StageModel', {
-        id: 0,
-        name: '',
-        score: 0,
-    });
-
-export interface StageModel extends Instance<typeof Stage> {
-};
+import {Stage, StageModel} from "app/stores/StageStore";
 
 export const CityModel = types
     .model('CityModel', {
         id: 0,
-        title: '',
+        title: ''
     });
 
 export const UserStore = types
@@ -29,7 +20,11 @@ export const UserStore = types
         photo_200: '',
         timezone: 0,
         score: 0,
-        stage: types.optional(Stage, {id: 0, name: "Новичек"})
+        stage: types.optional(Stage, {
+            id: 0,
+            name: '',
+            score: 0
+        })
     })
     .actions(self => ({
         setScore(score: number) {
