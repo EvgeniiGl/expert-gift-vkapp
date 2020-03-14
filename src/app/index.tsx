@@ -18,6 +18,14 @@ import {API} from "app/core/services/api";
 import {Loader} from "app/core/components/loader/loader";
 import {ModalStage} from "app/core/components/ModalStage";
 import {StageModel} from "app/stores/StageStore";
+import {UserModel} from "app/stores/UserStore";
+
+type IInitialData = [Promise<{ data?: User }>, Promise<{ data?: GiftType[] }>, Promise<{ data?: StageModel[] }>]
+
+interface User extends UserModel {
+    stage: StageModel
+}
+
 
 export const App =
     observer(() => {
@@ -25,63 +33,68 @@ export const App =
         const {screenStore, userStore, giftStore, stageStore} = store;
 
         useEffect(() => {
+            vk_bridge.send("VKWebAppInit", {});
             connect.subscribe(({detail: {type, data}}) => {
                     if (type === 'VKWebAppUpdateConfig') {
                         // const schemeAttribute = document.createAttribute('scheme');
                     }
                 }
             );
-            //TODO rewrite to async Promises
-            fetchDataUser();
-            fetchNewGifts();
-            getListStages()
-            vk_bridge.send("VKWebAppInit", {});
+            (async () => {
+                await fetchUserVk();
+                getInitailData();
+            })();
         }, []);
 
-        const fetchDataUser = async () => {
-            let user;
+        const fetchUserVk = async () => {
+            let user: UserModel = userStore;
             try {
                 if (isProduction) {
                     const dataUser = await vk_bridge.send('VKWebAppGetUserInfo');
                     if (dataUser.status) user = dataUser.data;
                 } else {
-                    user = {id: vk_developer_id};
+                    user = {...user, id: vk_developer_id};
                 }
-                localStorage.setItem('user_id', user.id);
+                localStorage.setItem('user_id', `${user.id}`);
             } catch (e) {
                 customAlert.danger('Не удалось получить пользователя Вконтакте!');
             }
-            if (user.id) {
+        };
+
+        const getInitailData = async () => {
+            let promises: IInitialData = [
+                API.get<User>('user'),
+                API.get<GiftType[]>('gifts_new'),
+                API.get<StageModel[]>('/list_stages')
+            ];
+            const data = await Promise.all(promises);
+            setUserData(data[0].data);
+            setNewGifts(data[1].data);
+            setListStages(data[2].data);
+        };
+
+
+        const setUserData = (user?: User) => {
+            if (user && user.id) {
+                console.log('user-- ', user);
                 store.setUser(user);
+                stageStore.setStage(user.stage);
             } else {
-                customAlert.danger('Не удалось получить пользователя!');
-            }
-
-            const response = await API.get('user');
-
-            if (response.status) {
-                userStore.setStage(response.data.stage);
-                userStore.setScore(response.data.score);
-            } else {
-                customAlert.danger('Не удалось получить счет и рейтинг!');
+                customAlert.danger('Не удалось получить данные пользователя!');
             }
         };
 
-        const fetchNewGifts = async () => {
-            const response = await API.get<{ data: GiftType[] }>('gifts_new');
-            if (response.status && response.data.length > 0) {
-                giftStore.setGifts(response.data);
+        const setNewGifts = (gifts?: GiftType[]) => {
+            if (gifts && gifts.length > 0) {
+                giftStore.setGifts(gifts);
             } else {
                 customAlert.danger('Не удалось получить список подарков!');
             }
         };
 
-        const getListStages = async () => {
-            const response = await API.get<StageModel[]>('/list_stages');
-            if (response.status) {
-                stageStore.setListStages(response.data);
-                stageStore.setNextStage(response.data);
-
+        const setListStages = (stages?: StageModel[]) => {
+            if (stages && stages.length > 0) {
+                stageStore.setListStages(stages);
             } else {
                 customAlert.danger('Не удалось получить список рейтинга!');
             }
@@ -96,8 +109,8 @@ export const App =
                 {screenStore.currentScreen === ScreenEnum.Status && <Status/>}
                 {screenStore.currentScreen === ScreenEnum.ListGift && <ListGift/>}
                 <Alert/>
-                <Loader control />
-                <ModalStage />
+                <Loader control/>
+                <ModalStage/>
             </React.Fragment>
         );
     });
