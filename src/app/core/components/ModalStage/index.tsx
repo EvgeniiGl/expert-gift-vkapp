@@ -1,4 +1,4 @@
-import React, {RefObject} from "react";
+import React from "react";
 import * as S from './style';
 import {useStore} from "app/context/store";
 import {RootStoreType} from "app/stores";
@@ -8,7 +8,7 @@ import {StageStoreType} from "app/stores/StageStore";
 
 export const ModalStage: React.FC = observer((props) => {
 
-    let wrap:any;
+    let wrap: any;
 
     const store: RootStoreType = useStore();
 
@@ -24,7 +24,7 @@ export const ModalStage: React.FC = observer((props) => {
 
     return <S.Container onClick={outSideClick}>
         <S.Wrapper ref={(ref) => wrap = ref}>
-            <S.Bg src={`${stageStore.stage}`}/>
+            <S.Bg src={`${stageStore.stageImage}`}/>
             <S.Close onClick={() => stageStore.toggleModalStage(false)}/>
             <S.Title>Поздравляем,</S.Title>
             <S.Text>вы достигли нового ранга</S.Text>

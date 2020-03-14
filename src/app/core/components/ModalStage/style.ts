@@ -1,17 +1,19 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-        position: absolute;
+    position: fixed;
+    z-index: 2;
+    top: 0;
     height: 100%;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center; 
-  background-color: rgba(0,0,0, 0.62); 
+    background-color: rgba(0,0,0, 0.62); 
 `;
 
 export const Wrapper = styled.div`
-        position: relative;
+    position: relative;
 `;
 
 export const Bg = styled.img` 
@@ -23,34 +25,35 @@ export const Bg = styled.img`
   `;
 
 export const Close = styled.div`
-     right: 8%;
+    right: 2%;
     position: absolute;
     height: 11%;
     top: 11%;
+    padding: 0 16px;
     -webkit-transform: translate(-50%,-50%);
     -ms-transform: translate(-50%,-50%);
     transform: translate(-50%,-50%);
-  &:hover {
-  opacity: 1;
-}
-&:after, &:before {
- position: absolute;
-  left: 15px;
-  content: ' ';
-  height: 33px;
-  width: 3px;
-  background-color: #fff;
-}
-&:after {
- transform: rotate(-45deg);
-}
-&:before {
-  transform: rotate(45deg);
-}
+    &:hover {
+      opacity: 1;
+    }
+    &:after, &:before {
+      position: absolute;
+      left: 15px;
+      content: ' ';
+      height: 33px;
+      width: 3px;
+      background-color: #fff;
+    }
+    &:after {
+      transform: rotate(-45deg);
+    }
+    &:before {
+      transform: rotate(45deg);
+    }
   `;
 
 export const Title = styled.div` 
-position: absolute;
+    position: absolute;
     font-weight: 900;
     font-size: 24px;
     text-align: center;
@@ -72,7 +75,7 @@ export const Text = styled.div`
   `;
 
 export const Button = styled.div` 
-position: absolute;
+    position: absolute;
     font-weight: 900;
     font-size: 20px;
     text-align: center;

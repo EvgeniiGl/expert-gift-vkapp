@@ -6,22 +6,22 @@ import avatar from '@img/avatar.svg';
 import {ScreenEnum} from "app/stores/ScreenStore";
 import {observer} from "mobx-react-lite";
 import {useStore} from "app/context/store";
-import {UserModel} from "app/stores/UserStore";
+import {StageStoreType} from "app/stores/StageStore";
 
 interface Props {
     screen: ScreenEnum
-    setScreen: (screen:ScreenEnum) => void
+    setScreen: (screen: ScreenEnum) => void
 }
 
 const Header: React.FC<Props> = observer((props) => {
 
 
-        const user: UserModel = useStore().userStore;
+        const stageStore: StageStoreType = useStore().stageStore;
 
         return <S.Container>
             <S.Info>
-                <S.Stage>{user.stage.name}</S.Stage>
-                <S.Score>{user.score}</S.Score>
+                <S.Stage>{stageStore.stage.name}</S.Stage>
+                <S.Score>{stageStore.stage.score}</S.Score>
             </S.Info>
             <S.Tab active={props.screen === ScreenEnum.ListGift} onClick={() => props.setScreen(ScreenEnum.ListGift)}>
                 <S.ImgGiftsList src={gifts_list}/>

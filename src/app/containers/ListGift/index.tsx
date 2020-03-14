@@ -13,6 +13,7 @@ import {UserModel} from "app/stores/UserStore";
 import {GiftMenu} from "app/containers/ListGift/components/gift_menu";
 import {vk_bridge} from "app/core/services/vk_bridge";
 import {StageStoreType} from "app/stores/StageStore";
+import {ModalStage} from "app/core/components/ModalStage";
 
 const ListGift = observer(function (props) {
 
@@ -39,12 +40,11 @@ const ListGift = observer(function (props) {
         infinite: false,
         arrows: false,
         beforeChange: (current: number, next: number) => {
-            if (!!mark) {
-                saveMark({id: giftStore.gifts[current].id, mark: mark});
-                toggleGift(giftStore.gifts[next]);
-                if (giftStore.gifts.length < current + 5 && !loadAttachGifts) {
-                    attachGifts();
-                }
+            if (mark === undefined) return;
+            saveMark({id: giftStore.gifts[current].id, mark: mark});
+            toggleGift(giftStore.gifts[next]);
+            if (giftStore.gifts.length < current + 5 && !loadAttachGifts) {
+                attachGifts();
             }
         },
     };
@@ -52,7 +52,7 @@ const ListGift = observer(function (props) {
     const addScoreRepost = async (gift: GiftType) => {
         const response = await API.post<number>("repost", gift);
         if (response.status) {
-            userStore.addScore(response.data);
+            stageStore.setScore(response.data);
         } else {
             customAlert.danger('Не удалось добавить очки за репост!');
         }
@@ -102,7 +102,12 @@ const ListGift = observer(function (props) {
     const saveMark = async (data: { id: number, mark: 0 | 1 }) => {
         const response = await API.post<number>('/save_marks', [data]);
         if (response.status) {
-            userStore.setScore(response.data);
+            stageStore.setScore(response.data);
+            if (stageStore.nextStage.score <= response.data) {
+                stageStore.setStage(stageStore.nextStage);
+                stageStore.setScore(response.data);
+                stageStore.toggleModalStage(true);
+            }
         } else {
             customAlert.danger('Не удалось сохранить оценки!');
         }

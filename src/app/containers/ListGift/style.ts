@@ -79,7 +79,7 @@ export const WrapperScore = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 100000;
+    z-index: 1;
     transform: translate(-50%, 50%);
     left: 50%;
     min-width: 340px;
@@ -91,10 +91,6 @@ export const Score = styled.div`
     flex-direction: column;
     align-items: center;
     width: 80px;
-`;
-
-export const Hidden = styled.div` 
-    height: 10px;
 `;
 
 export const SliderItem = styled.div` 

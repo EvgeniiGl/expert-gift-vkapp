@@ -3,7 +3,7 @@ import stage1 from "@img/stage1.png";
 import stage2 from "@img/stage2.png";
 import stageExpert from "@img/stage_expert.png";
 
-export enum StageEnum {
+export enum StageImageEnum {
     'one' = stage1, 'two' = stage2, 'expert' = stageExpert
 }
 
@@ -21,11 +21,16 @@ const StageStore = types
     .model('StageStore', {
         listStages: types.array(Stage),
         showModalStage: false,
-        stage: StageEnum.expert,
+        stageImage: StageImageEnum.expert,
         nextStage: types.optional(Stage, {
             id: 0,
             name: '',
             score: 0,
+        }),
+        stage: types.optional(Stage, {
+            id: 0,
+            name: '',
+            score: 0
         })
     })
     .views(self => ({}))
@@ -33,11 +38,16 @@ const StageStore = types
         setListStages(listStages: StageModel[]) {
             self.listStages = cast(listStages);
         },
-        setNextStage(currentStage: StageModel) {
-
-        },
         toggleModalStage(show: boolean) {
             self.showModalStage = show;
+        },
+        setScore(score: number) {
+            self.stage.score = score;
+        },
+        setStage(stage: StageModel) {
+            self.stage = stage;
+            const next: any = self.listStages.find((stage) => stage.score > stage.score);
+            if (next) self.nextStage = next[0];
         },
     }));
 

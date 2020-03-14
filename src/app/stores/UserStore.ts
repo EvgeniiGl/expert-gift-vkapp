@@ -19,23 +19,8 @@ export const UserStore = types
         bdate: '',
         photo_200: '',
         timezone: 0,
-        score: 0,
-        stage: types.optional(Stage, {
-            id: 0,
-            name: '',
-            score: 0
-        })
     })
     .actions(self => ({
-        setScore(score: number) {
-            self.score = score;
-        },
-        setStage(stage: StageModel) {
-            self.stage = stage;
-        },
-        addScore(score: number) {
-            self.score += score;
-        },
     }));
 
 export interface UserModel extends Instance<typeof UserStore> {

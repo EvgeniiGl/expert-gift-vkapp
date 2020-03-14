@@ -114,6 +114,7 @@ export const Score = styled.div<{ width: number }>`
     }
     &>:nth-child(1){
         width: ${props => `${props.width}`}%;
+        text-align: initial;
     }
 `;
 
