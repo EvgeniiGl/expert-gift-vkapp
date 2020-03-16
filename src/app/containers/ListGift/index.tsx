@@ -9,17 +9,14 @@ import {GiftStoreType, GiftType} from "app/stores/GiftStore";
 import {GiftItem} from "app/containers/ListGift/components/gift_item";
 import {API} from "app/core/services/api";
 import {customAlert} from "app/core/components/alert";
-import {UserModel} from "app/stores/UserStore";
 import {GiftMenu} from "app/containers/ListGift/components/gift_menu";
 import {vk_bridge} from "app/core/services/vk_bridge";
 import {StageStoreType} from "app/stores/StageStore";
-import {ModalStage} from "app/core/components/ModalStage";
 
 const ListGift = observer(function (props) {
 
     const store = useStore();
     const screenStore = store.screenStore;
-    const userStore: UserModel = store.userStore;
     const giftStore: GiftStoreType = store.giftStore;
     const stageStore: StageStoreType = store.stageStore;
 
@@ -65,13 +62,6 @@ const ListGift = observer(function (props) {
     };
 
     const repost = async () => {
-        // if (connect.supports("VKWebAppShowWallPostBox")) {
-        //     connect.send("VKWebAppShowWallPostBox", {
-        //         "message": `Эксперт подарков: Идея ${gift.title}! https://vk.com/siberia_handmade`,
-        //         "attachments": `photo${gift.img}, https://vk.com/siberia_handmade`
-        //     });
-        // }
-
         const response = await vk_bridge.send("VKWebAppShowWallPostBox", {"message": `Эксперт подарков! Идея: ${currentGift.title}! https://vk.com/siberia_handmade`});
         if (response.status) {
             addScoreRepost(currentGift);
@@ -85,19 +75,6 @@ const ListGift = observer(function (props) {
 
         };
     }, []);
-
-    // const saveMarks = async () => {
-    //     const data = giftStore.giftsForSave;
-    //     const response = await API.post<ResponseType>('/save_marks', data);
-    //     if (response.status) {
-    //         data.forEach((gift => {
-    //             gift.setSave();
-    //         }));
-    //         userStore.setScore(response.data);
-    //     } else {
-    //         customAlert.danger('Не удалось сохранить оценки!');
-    //     }
-    // };
 
     const saveMark = async (data: { id: number, mark: 0 | 1 }) => {
         const response = await API.post<number>('/save_marks', [data]);

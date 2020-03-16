@@ -1,5 +1,11 @@
 import styled from 'styled-components';
 
+export enum NumColor {
+    gray = '#9E9899',
+    green = '#16C2B7',
+    orange = '#ED8A19',
+    red = '#EB2E4A',
+}
 
 export const Container = styled.div`
     display: flex;
@@ -9,51 +15,72 @@ export const Container = styled.div`
     height: 100vh;
 `;
 
-export const Title = styled.h1`
-    font-style: normal;
+export const Text = styled.div`
+    width: 80%;
     font-weight: bold;
-    font-size: 20px;
-    line-height: 23px;
-    text-align: center;
-    color: rgba(51, 51, 51, 0.5);
+    font-size: 14px;
 `;
 
-export const Row = styled.div`
-    display:flex;
-`;
-
-export const WrapperUser = styled.div`
-    display:flex;
+export const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
     width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+`;
+
+export const Num = styled.div<{ color: NumColor }>`
+    border-radius: 50%;
+    background: ${({color}) => color};
+    padding: 6px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 12px;
+    min-width: 16px;
+    text-align: center;
+    margin: 0 20px;
+`;
+
+export const Avatar = styled.img`
+    border-radius: 50%;
+    max-width: 50px;
+    margin: 10px;
 `;
 
 export const Img = styled.img`
-margin: 50px;
-    width: 120px;
 `;
 
-export const UserInfo = styled.div`
+export const Name = styled.div`
+    font-weight: bold;
+    font-size: 14px;
+    margin: 0 8px;
+`;
+
+export const List = styled.ul`
+    width: 80%;
+    padding: 0;
+`;
+
+export const Item = styled.li`
+    background: #F4F4F4;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    &>:first-child{
-        font-style: normal;
-        font-weight: 600;
-        font-size: 18px;
-        line-height: 21px;
-        margin-bottom: 10px;
-    }
-    &>:nth-child(2){
-        font-style: normal;
-        font-weight: 600;
-        font-size: 14px;
-        line-height: 16px;
-    }
-    &>:last-child{
-        font-family: Roboto Condensed,sans-serif;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 16px;
-    }
+    align-items: center;
+    margin: 10px 0;
+`;
+
+export const Score = styled.div`
+    font-size: 14px;
+    color: #fff;
+    font-weight: bold;
+    background: #673AB7;
+    border-radius: 5px;
+    padding: 5px;
+    margin-left: auto;
+    margin-right: 20px;
+`;
+
+export const HiddenBottom = styled.div`
 `;

@@ -5,7 +5,7 @@ import {ScreenEnum} from "app/stores/ScreenStore";
 import * as S from './style';
 import avatar from '@img/avatar.svg';
 import Header from "app/core/components/Header";
-import {UserModel} from "app/stores/UserStore";
+import {IUser} from "app/stores/UsersStore";
 import {ListStages} from "app/containers/Profile/components/list_stages";
 import {SliderRating} from "app/containers/Profile/components/slider_rating";
 import {StageStoreType} from "app/stores/StageStore";
@@ -13,7 +13,7 @@ import {StageStoreType} from "app/stores/StageStore";
 
 const Profile = observer(function (props) {
     const screenStore = useStore().screenStore;
-    const user: UserModel = useStore().userStore;
+    const user: IUser = useStore().usersStore.user;
     const stageStore: StageStoreType = useStore().stageStore;
 
     return (

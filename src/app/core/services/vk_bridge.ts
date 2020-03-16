@@ -1,4 +1,6 @@
 import bridge, {ErrorData, ReceiveData, RequestMethodName, RequestProps} from '@vkontakte/vk-bridge';
+import {isProduction} from "../../../config";
+import {mock_bridge} from "../../../mock_bridge";
 
 type ResponseError = {
     error_type: string,
@@ -23,4 +25,4 @@ class VkBridge {
     };
 }
 
-export const vk_bridge = new VkBridge();
+export const vk_bridge = isProduction ? new VkBridge() : mock_bridge;

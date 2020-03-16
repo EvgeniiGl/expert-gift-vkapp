@@ -31,7 +31,9 @@ const StageStore = types
             id: 0,
             name: '',
             score: 0
-        })
+        }),
+        page: 0,
+        last_page: types.maybeNull(types.integer)
     })
     .views(self => ({}))
     .actions(self => ({
@@ -48,6 +50,10 @@ const StageStore = types
             self.stage = stage;
             const next: any = self.listStages.find((stage) => stage.score > stage.score);
             if (next) self.nextStage = next[0];
+        },
+        setPage(page: number, last_page: number) {
+            self.page = page;
+            self.last_page = last_page;
         },
     }));
 

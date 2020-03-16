@@ -7,7 +7,7 @@ import {Instance, types} from "mobx-state-tree";
 //     });
 
 const User = types
-    .model('UserStore', {
+    .model('UserModel', {
         id: 0,
         first_name: '',
         last_name: '',
@@ -18,6 +18,8 @@ const User = types
         // bdate: '',
         photo_200: '',
         // timezone: 0,
+        score: 0,
+        top:0,
     })
     .actions(self => ({}));
 
@@ -25,19 +27,23 @@ export interface IUser extends Instance<typeof User> {
 };
 
 const UsersStore = types
-    .model('UserStore', {
+    .model('UsersStore', {
         users: types.array(User),
         user: types.optional(User, {
             id: 0,
             first_name: '',
             last_name: '',
             photo_200: '',
+            top:0,
         }),
     })
     .actions(self => ({
             setUser(user: IUser) {
                 self.user = user;
-            }
+            },
+            setUsers(users: IUser[]) {
+                self.users.replace(users);
+            },
         })
     );
 

@@ -3,7 +3,7 @@ import LoaderStore from './LoaderStore';
 import StageStore from './StageStore';
 import ScreenStore from './ScreenStore';
 import makeInspectable from "mobx-devtools-mst"
-import UserStore from "app/stores/UserStore";
+import UsersStore from "app/stores/UsersStore";
 import GiftStore from "app/stores/GiftStore";
 
 const RootStore = types
@@ -11,19 +11,15 @@ const RootStore = types
         screenStore: types.optional(ScreenStore, {}),
         stageStore: types.optional(StageStore, {}),
         loaderStore: types.optional(LoaderStore, {}),
-        userStore: types.optional(UserStore, {}),
+        usersStore: types.optional(UsersStore, {}),
         giftStore: types.optional(GiftStore, {}),
-    }).actions(self => ({
-            setUser(user: Instance<typeof UserStore>) {
-                self.userStore = user;
-            }
-        })
-    );
+    })
 
 export type RootStoreType = Instance<typeof rootStore>
 
 const rootStore = RootStore.create();
 
+//debug store
 onPatch(rootStore, patch => {
     console.log(patch);
 });
