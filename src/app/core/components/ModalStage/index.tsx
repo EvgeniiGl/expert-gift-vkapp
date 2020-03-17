@@ -26,8 +26,9 @@ export const ModalStage: React.FC = observer((props) => {
         <S.Wrapper ref={(ref) => wrap = ref}>
             <S.Bg src={`${stageStore.stageImage}`}/>
             <S.Close onClick={() => stageStore.toggleModalStage(false)}/>
-            <S.Title>Поздравляем,</S.Title>
-            <S.Text>вы достигли нового ранга</S.Text>
+            <S.StageName>Эксперт</S.StageName>
+            <S.Title>Поздравляем!</S.Title>
+            <S.Text>Вы достигли нового ранга</S.Text>
             <S.Button>Круто, рассказать друзьям!</S.Button>
         </S.Wrapper>
     </S.Container>;

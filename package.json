@@ -50,6 +50,7 @@
   "dependencies": {
     "@vkontakte/icons": "^1.10.0",
     "@vkontakte/vk-bridge": "^2.0.7",
+    "@vkontakte/vk-bridge-mock": "^2.0.3",
     "@vkontakte/vk-connect": "^1.6.5",
     "@vkontakte/vkui": "^2.30.7",
     "axios": "^0.19.2",

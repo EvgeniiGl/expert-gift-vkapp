@@ -9,11 +9,12 @@ const baseContainerStyles = css`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    opacity: 0.1;
+    opacity: 0.3;
+    background: #2c2d2e;
 `;
 
 const styleAbsolute = css`
-  position: absolute;
+  position: fixed;
 `;
 
 export const Container = styled.div<{ show: boolean, inside?: boolean }>`

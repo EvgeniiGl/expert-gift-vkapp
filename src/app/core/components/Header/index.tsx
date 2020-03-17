@@ -26,7 +26,7 @@ const Header: React.FC<Props> = observer((props) => {
             <S.Tab active={props.screen === ScreenEnum.ListGift} onClick={() => props.setScreen(ScreenEnum.ListGift)}>
                 <S.ImgGiftsList src={gifts_list}/>
             </S.Tab>
-            <S.Tab active={props.screen === ScreenEnum.Status} onClick={() => props.setScreen(ScreenEnum.Status)}>
+            <S.Tab active={props.screen === ScreenEnum.Stage} onClick={() => props.setScreen(ScreenEnum.Stage)}>
                 <S.Img src={crown}/>
             </S.Tab>
             <S.Tab active={props.screen === ScreenEnum.Profile} onClick={() => props.setScreen(ScreenEnum.Profile)}>

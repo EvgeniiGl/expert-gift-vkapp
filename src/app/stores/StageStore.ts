@@ -1,10 +1,10 @@
 import {cast, Instance, types} from 'mobx-state-tree';
 import stage1 from "@img/stage1.png";
 import stage2 from "@img/stage2.png";
-import stageExpert from "@img/stage_expert.png";
+import stage from "@img/stage_modal.png";
 
 export enum StageImageEnum {
-    'one' = stage1, 'two' = stage2, 'expert' = stageExpert
+    'one' = stage1, 'two' = stage2, 'expert' = stage
 }
 
 export const Stage = types
@@ -22,18 +22,20 @@ const StageStore = types
         listStages: types.array(Stage),
         showModalStage: false,
         stageImage: StageImageEnum.expert,
-        nextStage: types.optional(Stage, {
-            id: 0,
-            name: '',
-            score: 0,
-        }),
         stage: types.optional(Stage, {
             id: 0,
             name: '',
             score: 0
-        })
+        }),
+        page: 0,
+        last_page: types.maybeNull(types.integer)
     })
-    .views(self => ({}))
+    .views(self => ({
+        get nextStageScore() {
+            const next = self.listStages.find(stage => stage.id === self.stage.id);
+            return next?.score || NaN;
+        }
+    }))
     .actions(self => ({
         setListStages(listStages: StageModel[]) {
             self.listStages = cast(listStages);
@@ -46,8 +48,10 @@ const StageStore = types
         },
         setStage(stage: StageModel) {
             self.stage = stage;
-            const next: any = self.listStages.find((stage) => stage.score > stage.score);
-            if (next) self.nextStage = next[0];
+        },
+        setPage(page: number, last_page: number) {
+            self.page = page;
+            self.last_page = last_page;
         },
     }));
 
