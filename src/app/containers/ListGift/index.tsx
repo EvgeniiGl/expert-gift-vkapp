@@ -21,8 +21,8 @@ const ListGift = observer(function (props) {
     const stageStore: StageStoreType = store.stageStore;
 
     const [mark, toggleMark] = useState<0 | 1>();
-    const [currentGift, toggleGift] = useState(giftStore.gifts[0]);
-    const [loadAttachGifts, setLoadAttachGifts] = useState(false);
+    const [currentGift, toggleGift] = useState<GiftType>(giftStore.gifts[0]);
+    const [loadAttachGifts, setLoadAttachGifts] = useState<boolean>(false);
 
     let slider: any = null;
 
@@ -38,8 +38,9 @@ const ListGift = observer(function (props) {
         arrows: false,
         beforeChange: (current: number, next: number) => {
             if (mark === undefined) return;
-            saveMark({id: giftStore.gifts[current].id, mark: mark});
+            saveMark(giftStore.gifts[current], mark);
             toggleGift(giftStore.gifts[next]);
+            giftStore.setCurrentGiftIndex(next);
             if (giftStore.gifts.length < current + 5 && !loadAttachGifts) {
                 attachGifts();
             }
@@ -55,7 +56,6 @@ const ListGift = observer(function (props) {
         }
     };
 
-
     const setMark = async (mark: 0 | 1) => {
         toggleMark(mark);
         slider.slickNext();
@@ -69,17 +69,18 @@ const ListGift = observer(function (props) {
     };
 
     useEffect(() => {
-
+        slider.slickGoTo(giftStore.currentGiftIndex);
         return () => {
-
 
         };
     }, []);
 
-    const saveMark = async (data: { id: number, mark: 0 | 1 }) => {
-        const response = await API.post<number>('/save_marks', [data]);
+    const saveMark = async (gift: GiftType, mark: 0 | 1) => {
+        const markData = {id: gift.id, mark: mark};
+        const response = await API.post<number>('/save_marks', [markData]);
         if (response.status) {
             stageStore.setScore(response.data);
+            //up level
             if (stageStore.nextStageScore <= response.data) {
                 const next = stageStore.listStages.find(stage => stage.id === stageStore.stage.id + 1);
                 next && stageStore.setStage({...next, score: response.data});

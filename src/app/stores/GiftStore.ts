@@ -49,28 +49,9 @@ export type GiftType = Instance<typeof Gift>
 const GiftStore = types
     .model('GiftStore', {
         gifts: types.array(Gift),
+        currentGiftIndex:0
     })
     .views(self => ({
-            // get needSave() {
-            //     return self.gifts.filter(gift => !!gift.saved).length + countSaveMarks <
-            //         self.gifts.filter(gift => gift.mark !== null).length;
-            // },
-            // get needAdd() {
-            //     return self.gifts.filter(gift => gift.mark === null).length < 5;
-            // },
-            // get giftsForSave() {
-            //     return self.gifts.reduce(function (giftsForSave, gift) {
-            //         if (gift.mark !== null && !gift.saved) {
-            //             giftsForSave.push(gift);
-            //         }
-            //         return giftsForSave;
-            //     }, []);
-            //
-            // }
-            get savedGifts() {
-                return self.gifts.filter(gift => gift.saved);
-
-        }
     }))
     .actions(self => ({
         setGifts(gifts: GiftType[]) {
@@ -80,6 +61,9 @@ const GiftStore = types
         attachGifts(gifts: GiftType[]) {
             const uniqueGifts:GiftType[] = self.gifts.concat(gifts).reduce((acc, value:any) => acc.some((i:GiftType) => i.id === value.id) ? acc : acc.concat(value), []);
             self.gifts.replace(uniqueGifts);
+        },
+        setCurrentGiftIndex(index:number) {
+            self.currentGiftIndex = index
         },
     }));
 
