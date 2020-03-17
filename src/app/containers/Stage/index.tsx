@@ -47,10 +47,10 @@ const Stage = observer(function () {
     let subscribeScroll$: Subscription = new Subscription();
     let bottomRef: HTMLDivElement;
 
-    const getRatingUsers = async () => {
-        if (stageStore.last_page === stageStore.page) return;
+    const getRatingUsers = async (page: number) => {
+        if (stageStore.last_page === stageStore.page || stageStore.page >= page) return;
         loaderStore.toggleLoader(true);
-        const response = await API.get<IRatingUsers>(`/rating_users?page=${stageStore.page + 1}`);
+        const response = await API.get<IRatingUsers>(`/rating_users?page=${page}`);
 
         if (response.status) {
             const ratingUsers: IRatingUsers = response.data.original.data;
@@ -90,7 +90,7 @@ const Stage = observer(function () {
     useEffect(() => {
         const scrollEvent = fromEvent(document, 'scroll');
         subscribeScroll$ = scrollEvent.pipe(debounce(() => interval(500))).subscribe(trackScrolling);
-        getRatingUsers();
+        getRatingUsers(1);
         return () => {
             subscribeScroll$.unsubscribe();
         };
@@ -99,8 +99,7 @@ const Stage = observer(function () {
     const trackScrolling = () => {
         var position = bottomRef.getBoundingClientRect();
         if (position.top >= 0 && position.bottom <= window.innerHeight + 500) {
-
-            getRatingUsers();
+            getRatingUsers(stageStore.page + 1);
         }
     };
 
