@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {isMobile} from "app/core/helpers/detect_mobile";
 
 export const Container = styled.div`
     display: flex;
@@ -16,11 +17,18 @@ export const Title = styled.h1`
 
 export const Avatar = styled.img`
     border-radius: 50%;
-    max-width: 110px;
+    max-width: 80px;
     margin: 10px 30px;
 `;
 
-export const UserInfo = styled.div`
+export const UserInfo = isMobile
+    ? styled.div`
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+`
+    : styled.div`
     display: flex;
     align-items: center;
     width: 100%;
@@ -32,6 +40,11 @@ export const Status = styled.div`
     color: #311B92;
 `;
 
+export const Arrow = styled.span`
+    font-size: 14px;
+    margin: 20px;
+    color: #888;
+`;
 
 export const Wrapper = styled.div`
     width: 100%;
@@ -40,7 +53,15 @@ export const Wrapper = styled.div`
     flex-direction: column;
 `;
 
-export const WrapperUser = styled.div`
+export const WrapperUser = isMobile
+    ? styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: 0px 4px 4px rgba(15,0,43,0.25);
+    flex-direction: column;
+`
+    : styled.div`
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -58,11 +79,23 @@ export const SliderText = styled.div`
     font-size: 14px;
     width: 80%;
     margin-bottom: 12px;
+    transform: translate(10%, 0px);
+`;
+
+export const Slider = isMobile
+    ? styled.div`
+    width: 100%;
+    text-align:center;
+    margin-bottom: 20px;
+`
+    : styled.div`
+    width: 100%;
+    text-align:center;
 `;
 
 export const WrapSlider = styled.div`
-    width: 100%;
-    text-align:center;
+    position: relative; 
+    transform: translate(10%, 0px);
 `;
 
 export const Main = styled.div`
@@ -73,7 +106,11 @@ export const Wrap = styled.div`
     display: flex;
 `;
 
-export const Col = styled.div`
+export const Col = isMobile
+    ? styled.div`
+    margin-right: 20px;
+`
+    : styled.div`
     margin-right: 150px;
 `;
 
@@ -108,13 +145,13 @@ export const Score = styled.div<{ width: number }>`
     display: flex;
     justify-content: space-between;
     font-size: 10px;
-    &>:nth-child(2){
-    display:${props => props.width < 6 || props.width > 87 ? 'none' : 'block'};
-        margin-right: auto;
-    }
     &>:nth-child(1){
         width: ${props => `${props.width}`}%;
         text-align: initial;
+    }
+    &>:nth-child(2){
+    display:${props => props.width < 6 || props.width > 87 ? 'none' : 'block'};
+        margin-right: auto;
     }
 `;
 

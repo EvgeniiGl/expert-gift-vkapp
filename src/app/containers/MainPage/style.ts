@@ -4,7 +4,6 @@ import img2 from "@img/bg.svg";
 export const Container = styled.div`
     display: flex;
     align-items: center;
-    justify-content: center;
     min-height:100vh;
     background-image: url(${img2});
     background-repeat: no-repeat;
@@ -31,7 +30,7 @@ export const WrapperUser = styled.div`
 export const Avatar = styled.img`
     border-radius: 50%;
     max-width: 156px;
-    margin-right: 30px;
+    margin: 0 20px;
 `;
 
 export const UserInfo = styled.div`

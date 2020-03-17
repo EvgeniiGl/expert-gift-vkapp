@@ -12,6 +12,7 @@ import {customAlert} from "app/core/components/alert";
 import {GiftMenu} from "app/containers/ListGift/components/gift_menu";
 import {vk_bridge} from "app/core/services/vk_bridge";
 import {StageStoreType} from "app/stores/StageStore";
+import {isMobile} from "app/core/helpers/detect_mobile";
 
 const ListGift = observer(function (props) {
 
@@ -26,7 +27,7 @@ const ListGift = observer(function (props) {
 
     let slider: any = null;
 
-    const settings = {
+    let settings = {
         dots: false,
         speed: 800,
         slidesToShow: 1,
@@ -46,6 +47,11 @@ const ListGift = observer(function (props) {
             }
         },
     };
+
+    if (isMobile) {
+        //settings slider for mobile
+        settings = Object.assign(settings, {centerPadding: '10px'});
+    }
 
     const addScoreRepost = async (gift: GiftType) => {
         const response = await API.post<number>("repost", gift);
@@ -106,6 +112,7 @@ const ListGift = observer(function (props) {
         return <GiftItem key={gift.id}
                          gift={gift}/>;
     });
+
 
     return (
         <S.Container>

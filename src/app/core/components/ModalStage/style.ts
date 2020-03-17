@@ -17,7 +17,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Bg = styled.img` 
-	height: 600px;
+    height: 80vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -55,49 +55,47 @@ export const Close = styled.div`
 export const Title = styled.div` 
     position: absolute;
     font-weight: 900;
-    font-size: 24px;
     text-align: center;
     color: #fff;
-    top: 68%;
     right: 50%;
     transform: translate(50%,-50%);
+    font-size: 20px;
+    top: 67%;
   `;
 
 export const Text = styled.div`
     position: absolute;
-    font-weight: 900;
-    font-size: 18px;
     text-align: center;
     color: #fff;
     top: 72%;
     right: 50%;
-    transform: translate(50%,-50%); 
+    transform: translate(50%,-50%);
+    font-weight: 500;
+    font-size: 16px;
   `;
 
 export const Button = styled.div` 
     position: absolute;
     font-weight: 900;
-    font-size: 20px;
     text-align: center;
     color: #fff;
-    bottom: 8%;
     right: 50%;
     transform: translate(50%,-50%);
     padding: 16px;
     background: linear-gradient(360deg, #FF460B 0%, #FED281 110.23%);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
+    bottom: 4%;
+    font-size: 16px;
   `;
 
 export const StageName = styled.div` 
     position: absolute;
     font-weight: 900;
-    font-size: 34px;
     text-align: center;
     color: #fff;
-    top: 61%;
     right: 50%;
-    -webkit-transform: translate(50%,-50%);
-    -ms-transform: translate(50%,-50%);
     transform: translate(50%,-50%);
+    font-size: 26px;
+    top: 60%;
   `;

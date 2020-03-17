@@ -9,7 +9,7 @@ type Props = {
 
 export const SliderRating: React.FC<Props> = (props) => {
 
-    let start = 0 ;
+    let start = 0;
     let end = 100;
     for (let i = 0; props.list_stages.length > i; i++) {
         if (props.score <= props.list_stages[i].score) {
@@ -19,16 +19,18 @@ export const SliderRating: React.FC<Props> = (props) => {
         start = props.list_stages[i].score;
     }
 
-    const width = (props.score) / (end - start) || 1;
+    const width = (props.score - start) / (end - start) * 100 || 2;
 
-    return <S.WrapSlider>
+    return <S.Slider>
         <S.SliderText>У вас {props.score} баллов</S.SliderText>
-        <S.ScoreSlider width={Math.ceil(width / 2.5)}/>
-        <S.Strip/>
-        <S.Score width={width}>
-            <span>{start}</span>
-            <span>{props.score}</span>
-            <span>{end}</span>
-        </S.Score>
-    </S.WrapSlider>;
+        <S.WrapSlider>
+            <S.ScoreSlider width={Math.ceil(width / 1.25)}/>
+            <S.Strip/>
+            <S.Score width={width}>
+                <span>{start}</span>
+                <span>{props.score}</span>
+                <span>{end}</span>
+            </S.Score>
+        </S.WrapSlider>
+    </S.Slider>;
 };

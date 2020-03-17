@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {isMobile} from "app/core/helpers/detect_mobile";
 
 export enum NumColor {
     gray = '#9E9899',
@@ -30,7 +31,8 @@ export const Wrapper = styled.div`
     margin: 20px 0;
 `;
 
-export const Num = styled.div<{ color: NumColor }>`
+export const Num = isMobile
+    ? styled.div<{ color: NumColor }>`
     border-radius: 50%;
     background: ${({color}) => color};
     padding: 6px;
@@ -40,6 +42,17 @@ export const Num = styled.div<{ color: NumColor }>`
     min-width: 16px;
     text-align: center;
     margin: 0 20px;
+`
+    : styled.div<{ color: NumColor }>`
+    border-radius: 50%;
+    background: ${({color}) => color};
+    padding: 6px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 12px;
+    min-width: 16px;
+    text-align: center;
+    margin: 0 10px;
 `;
 
 export const Avatar = styled.img`
@@ -71,7 +84,17 @@ export const Item = styled.li`
     margin: 10px 0;
 `;
 
-export const Score = styled.div`
+export const Score = isMobile
+    ? styled.div`
+    font-size: 14px;
+    color: #fff;
+    font-weight: bold;
+    background: #673AB7;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 0 10px;
+`
+    : styled.div`
     font-size: 14px;
     color: #fff;
     font-weight: bold;

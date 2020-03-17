@@ -25,7 +25,8 @@ const Profile = observer(function (props) {
                         <S.Avatar src={user.photo_200 || avatar}/>
                         <div>
                             <S.Text>Ваш статус -</S.Text>
-                            <S.Status>{stageStore.stage.name}</S.Status>
+                            <S.Status>{stageStore.stage.name} <S.Arrow>&#9658;</S.Arrow></S.Status>
+
                         </div>
                     </S.UserInfo>
                     <SliderRating list_stages={[...stageStore.listStages]} score={stageStore.stage.score}/>

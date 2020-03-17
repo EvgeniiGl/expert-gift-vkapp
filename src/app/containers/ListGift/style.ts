@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {isMobile} from "app/core/helpers/detect_mobile";
 
 export const Container = styled.div`
     display: flex;
@@ -33,9 +34,16 @@ export const Wrapper = styled.div`
     position: relative;
 `;
 
-export const ImgGift = styled.img`
+export const ImgGift = isMobile
+    ? styled.img`
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 100%;
+`
+    : styled.img`
     height: 100%;
     margin: 0 auto;
+    max-width: 97%;
 `;
 
 const Circle = styled.div`
@@ -93,15 +101,25 @@ export const Score = styled.div`
     width: 80px;
 `;
 
-export const SliderItem = styled.div` 
+export const SliderItem = isMobile
+    ? styled.div` 
+    background: #C4C4C4;
+    border-radius: 10px; 
+    height: 60vh;
+    margin: 0 3px;
+    display:flex; 
+    align-items: center;
+`
+    : styled.div` 
     background: #C4C4C4;
     border-radius: 10px; 
     height: 70vh;
     margin: 0 13px;
 `;
 
-export const Title = styled.h2` 
+export const Title = styled.h4` 
     margin: 10px;
+    text-align: center;
 `;
 
 export const Label = styled.div` 
