@@ -12,8 +12,6 @@ import {customAlert} from "app/core/components/alert";
 import {GiftType} from "app/stores/GiftStore";
 import Alert from "app/core/components/alert/components";
 import {vk_bridge} from "app/core/services/vk_bridge";
-import {ID_DEV} from "../vk_config";
-import {isProduction} from "../config";
 import {API} from "app/core/services/api";
 import {Loader} from "app/core/components/loader/loader";
 import {ModalStage} from "app/core/components/ModalStage";
@@ -29,7 +27,7 @@ interface User extends IUser {
 export const App =
     observer(() => {
         const store = useStore();
-        const {screenStore, usersStore, giftStore, stageStore} = store;
+        const {screenStore, usersStore, giftStore, stageStore, loaderStore} = store;
 
         useEffect(() => {
             vk_bridge.send("VKWebAppInit", {});
@@ -48,13 +46,9 @@ export const App =
         const fetchUserVk = async () => {
             let user: IUser = usersStore.user;
             try {
-                if (isProduction) {
-                    const dataUser = await vk_bridge.send('VKWebAppGetUserInfo');
-                    if (dataUser.status) user = dataUser.data;
-                } else {
-                    user = {...user, id: ID_DEV};
-                    store.usersStore.setUser(user);
-                }
+                const dataUser = await vk_bridge.send('VKWebAppGetUserInfo');
+                if (dataUser.status) user = dataUser.data;
+                store.usersStore.setUser(user);
                 localStorage.setItem('user_id', `${user.id}`);
             } catch (e) {
                 customAlert.danger('Не удалось получить пользователя Вконтакте!');
@@ -62,17 +56,26 @@ export const App =
         };
 
         const getInitailData = async () => {
+            loaderStore.toggleLoader(true);
             let promises: IInitialData = [
                 API.get<User>('user'),
                 API.get<GiftType[]>('gifts_new'),
                 API.get<StageModel[]>('/list_stages')
             ];
             const data = await Promise.all(promises);
+            await setListStages(data[2].data);
             setUserData(data[0].data);
             setNewGifts(data[1].data);
-            setListStages(data[2].data);
+            loaderStore.toggleLoader(false);
         };
 
+        const setListStages = (stages?: StageModel[]) => {
+            if (stages && stages.length > 0) {
+                stageStore.setListStages(stages);
+            } else {
+                customAlert.danger('Не удалось получить список рейтинга!');
+            }
+        };
 
         const setUserData = (user?: User) => {
             if (user && user.id) {
@@ -88,14 +91,6 @@ export const App =
                 giftStore.setGifts(gifts);
             } else {
                 customAlert.danger('Не удалось получить список подарков!');
-            }
-        };
-
-        const setListStages = (stages?: StageModel[]) => {
-            if (stages && stages.length > 0) {
-                stageStore.setListStages(stages);
-            } else {
-                customAlert.danger('Не удалось получить список рейтинга!');
             }
         };
 

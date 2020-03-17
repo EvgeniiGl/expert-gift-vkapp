@@ -80,9 +80,9 @@ const ListGift = observer(function (props) {
         const response = await API.post<number>('/save_marks', [data]);
         if (response.status) {
             stageStore.setScore(response.data);
-            if (stageStore.nextStage.score <= response.data) {
-                stageStore.setStage(stageStore.nextStage);
-                stageStore.setScore(response.data);
+            if (stageStore.nextStageScore <= response.data) {
+                const next = stageStore.listStages.find(stage => stage.id === stageStore.stage.id + 1);
+                next && stageStore.setStage({...next, score: response.data});
                 stageStore.toggleModalStage(true);
             }
         } else {

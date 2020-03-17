@@ -43,7 +43,6 @@ const Stage = observer(function () {
     const usersStore: IUsers = useStore().usersStore;
     const stageStore: StageStoreType = useStore().stageStore;
     const loaderStore: LoaderStoreType = useStore().loaderStore;
-    const currentUser: IUser = usersStore.user;
 
     let subscribeScroll$: Subscription = new Subscription();
     let bottomRef: HTMLDivElement;
@@ -51,14 +50,13 @@ const Stage = observer(function () {
     const getRatingUsers = async () => {
         if (stageStore.last_page === stageStore.page) return;
         loaderStore.toggleLoader(true);
-        const response = await API.get<IRatingUsers>(`/rating_users?page=${stageStore.page+1}`);
+        const response = await API.get<IRatingUsers>(`/rating_users?page=${stageStore.page + 1}`);
 
         if (response.status) {
             const ratingUsers: IRatingUsers = response.data.original.data;
             const usersId = ratingUsers.data.reduce((ids, user) => {
                 return `${ids},${user.id}`;
             }, '');
-            console.log('ratingUsers-- ', ratingUsers);
             stageStore.setPage(ratingUsers.current_page, ratingUsers.last_page);
 
             const responseVk: any = await vk_bridge.send('VKWebAppCallAPIMethod', {
@@ -110,6 +108,7 @@ const Stage = observer(function () {
         <Header screen={ScreenEnum.Stage} setScreen={setScreen}/>
         <S.Wrapper>
             <S.Text>Ваш рейтинг</S.Text>
+            <StageList users={[usersStore.user]}/>
             <S.Text>Общий рейтинг</S.Text>
             <StageList users={usersStore.users}/>
         </S.Wrapper>

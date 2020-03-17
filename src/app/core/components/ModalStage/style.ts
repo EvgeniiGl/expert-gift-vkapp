@@ -66,10 +66,10 @@ export const Title = styled.div`
 export const Text = styled.div`
     position: absolute;
     font-weight: 900;
-    font-size: 20px;
+    font-size: 18px;
     text-align: center;
     color: #fff;
-    top: 73%;
+    top: 72%;
     right: 50%;
     transform: translate(50%,-50%); 
   `;
@@ -80,11 +80,24 @@ export const Button = styled.div`
     font-size: 20px;
     text-align: center;
     color: #fff;
-    bottom: 10%;
+    bottom: 8%;
     right: 50%;
     transform: translate(50%,-50%);
     padding: 16px;
     background: linear-gradient(360deg, #FF460B 0%, #FED281 110.23%);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
+  `;
+
+export const StageName = styled.div` 
+    position: absolute;
+    font-weight: 900;
+    font-size: 34px;
+    text-align: center;
+    color: #fff;
+    top: 61%;
+    right: 50%;
+    -webkit-transform: translate(50%,-50%);
+    -ms-transform: translate(50%,-50%);
+    transform: translate(50%,-50%);
   `;

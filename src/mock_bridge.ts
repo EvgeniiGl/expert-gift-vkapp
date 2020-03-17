@@ -25,7 +25,15 @@ export const mock_bridge = {
                     }
                 };
             case "VKWebAppGetUserInfo":
-                return {data: {id: 151079225}};
+                return {
+                    status: true,
+                    data: {
+                        id: 151079225,
+                        first_name: "Тест",
+                        last_name: "Тестов",
+                        photo_200: "https://sun9-70.userapi.com/c639127/v639127225/8ecf/ecFoax3YGYk.jpg?ava=1",
+                    }
+                };
             default:
                 return [];
         }
