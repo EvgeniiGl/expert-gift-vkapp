@@ -48,7 +48,7 @@ const Stage = observer(function () {
     let bottomRef: HTMLDivElement;
 
     const getRatingUsers = async (page: number) => {
-        if (stageStore.last_page === stageStore.page || stageStore.page >= page) return;
+        if (stageStore.last_page === stageStore.page && page !== 1) return;
         loaderStore.toggleLoader(true);
         const response = await API.get<IRatingUsers>(`/rating_users?page=${page}`);
 
@@ -77,7 +77,8 @@ const Stage = observer(function () {
                     }
                     return arr;
                 }, []);
-                usersStore.setUsers([...usersStore.users, ...users]);
+                const result = ratingUsers.current_page === 1 ? users : [...usersStore.users, ...users];
+                usersStore.setUsers(result);
             } else {
                 customAlert.danger('Не удалось получить пользователей Вконтакте!');
             }
@@ -107,7 +108,7 @@ const Stage = observer(function () {
         <Header screen={ScreenEnum.Stage} setScreen={setScreen}/>
         <S.Wrapper>
             <S.Text>Ваш рейтинг</S.Text>
-            <StageList users={[usersStore.user]}/>
+            <StageList users={[{...usersStore.user, score: stageStore.stage.score}]}/>
             <S.Text>Общий рейтинг</S.Text>
             <StageList users={usersStore.users}/>
         </S.Wrapper>

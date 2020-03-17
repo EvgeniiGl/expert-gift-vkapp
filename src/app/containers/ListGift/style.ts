@@ -83,7 +83,7 @@ export const WrapperScore = styled.div`
     transform: translate(-50%, 50%);
     left: 50%;
     min-width: 340px;
-    bottom: 70px;
+    bottom: 36px;
 `;
 
 export const Score = styled.div`   
@@ -106,6 +106,6 @@ export const Title = styled.h2`
 
 export const Label = styled.div` 
     font-size:12px;
-    margin-top: 10px;
+    margin-top: 4px;
 `;
 

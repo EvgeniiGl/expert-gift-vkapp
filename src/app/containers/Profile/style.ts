@@ -16,8 +16,8 @@ export const Title = styled.h1`
 
 export const Avatar = styled.img`
     border-radius: 50%;
-    max-width: 156px;
-    margin: 20px 30px;
+    max-width: 110px;
+    margin: 10px 30px;
 `;
 
 export const UserInfo = styled.div`
