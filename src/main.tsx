@@ -1,25 +1,16 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { Provider } from 'mobx-react';
-import { createBrowserHistory } from 'history';
-import { TodoModel } from 'app/models';
-import { createStores } from 'app/stores';
-import { App } from 'app';
+import {App} from './app';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {StoreContext} from 'app/context/store';
+import store from 'app/stores/index';
+import '@vkontakte/vkui/dist/vkui.css';
 
-// default fixtures for TodoStore
-const defaultTodos = [
-  new TodoModel('Use Mobx'),
-  new TodoModel('Use React', true)
-];
+const Store: any = store;
 
-// prepare MobX stores
-const history = createBrowserHistory();
-const rootStore = createStores(history, defaultTodos);
-
-// render react DOM
 ReactDOM.render(
-  <Provider {...rootStore}>
-    <App history={history} />
-  </Provider>,
-  document.getElementById('root')
+    <StoreContext.Provider value={Store}>
+        <App/>
+    </StoreContext.Provider>,
+    document.getElementById('root')
 );
+
